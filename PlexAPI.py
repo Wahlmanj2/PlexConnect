@@ -228,7 +228,8 @@ def discoverPMS(ATV_udid, CSettings, IP_self, MyPlexToken=''):
     g_PMS[ATV_udid] = {}
     
     # install plex.tv "virtual" PMS - for myPlex, PlexHome
-    declarePMS(ATV_udid, 'plex.tv', 'plex.tv', 'https', 'plex.tv', '443')
+    # Remove Plexhome until bug is fixed for all libraries
+    # declarePMS(ATV_udid, 'plex.tv', 'plex.tv', 'https', 'plex.tv', '443')
     updatePMSProperty(ATV_udid, 'plex.tv', 'local', '-')
     updatePMSProperty(ATV_udid, 'plex.tv', 'owned', '-')
     updatePMSProperty(ATV_udid, 'plex.tv', 'accesstoken', MyPlexToken)
