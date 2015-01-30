@@ -69,7 +69,8 @@
                                         <title>{{TEXT(Search)}}</title>
                                         <image>{{URL(:/templates/plex/images/icons/search.png)}}</image>
                                         <defaultImage>resource://16X9.png</defaultImage>
-                                    </moviePoster>{{CUT($library_search::Show=|Hide=CUT)}}                                    
+                                    </moviePoster>
+                                    
                                 </items>
                             </shelfSection>
                         </sections>

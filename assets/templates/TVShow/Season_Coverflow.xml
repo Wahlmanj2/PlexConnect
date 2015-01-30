@@ -20,14 +20,14 @@
               'imageBlur'   : "{{VAL($fanartblur::1=1|2=2|3=3|0=)}}",\
               'layers'      : ["PlexSubPagedGrid{{VAL($fanarttint::On=Text|Off=)}}"]\
               })}})}})}}
-              </image>{{CUT($seasonlayers::Hide=CUT|Show=)}}
-          <image insets="0, 0, {{VAL(^aTVScreenResolution:1:720=360|1080=600)}}, 0" required="true">
-          {{URL(:/fanartcache/{{getBackground({{EVAL({\
-              'template'    : 'plex',\
-              'image'       : "{{IMAGEURL(art:::)}}",\
-              'resolution'  : "{{VAL(^aTVScreenResolution)}}"\
-              })}})}})}}
-          </image>{{CUT($seasonlayers::Hide=|Show=Hide)}}
+           </image>{{CUT($seasonlayers::Hide=CUT|Show=)}}
+           <image insets="0, 0, {{VAL(^aTVScreenResolution:1:720=360|1080=600)}}, 0" required="true">
+               {{URL(:/fanartcache/{{getBackground({{EVAL({\
+               'template'    : 'plex',\
+               'image'       : "{{IMAGEURL(art:::)}}",\
+               'resolution'  : "{{VAL(^aTVScreenResolution)}}"\
+               })}})}})}}
+           </image>{{CUT($seasonlayers::Hide=|Show=Hide)}}
         </imageHeader>
       </header>
       {{VAR(parentThumb:thumb)}}

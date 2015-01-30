@@ -31,26 +31,24 @@
           <collectionDivider alignment="left" accessibilityLabel="Recently Added">
               <title>{{TEXT(Recently Added)}}</title>
           </collectionDivider>{{CUT(@recentlyAdded/size:CUT:0=CUT|1=)}}
-       
-       
-       <pagedGrid id="paged-grid-0">
-           {{CUT(@recentlyAdded/size:CUT:0=CUT|1=)}}
-           <fourByThreePoster id="{{VAL(key)}}" featured="true" accessibilityLabel="{{VAL(title)}}" alwaysShowTitles="{{VAL($showtitles_library::Highlighted Only=false|Show All=true)}}"
-               onPlay="atv.loadURL('{{URL(key:::PlexConnect=Play_Video_Pause&amp;PlexConnectRatingKey={{VAL(ratingKey)}})}}')"
-               onSelect="atv.loadURL('{{URL(key:::includeExtras=1&amp;PlexConnect={{VAL(type::movie=Movie_|episode=Episode_)}}PrePlay)}}')"
-               onHoldSelect="scrobbleMenu('{{URL(key:::PlexConnect=Scrobble_MenuVideo)}}')">
-               {{PAGEDCOPY(@recentlyAdded/Video,6,1)}}
-               {{VAR(items:NoKey:TRUE)}}
-               <title>{{VAL(title)}}</title>
-               <subtitle>{{VAL(year:&#x00AD;)}}</subtitle>
-               <image>{{IMAGEURL(thumb::384)}}</image>
-               <defaultImage>resource://Poster.png</defaultImage>
-           </fourByThreePoster>
-       </pagedGrid>
-       
-       
-       
-         <!--<shelf id="shelf_0" columnCount="7">
+          
+          <pagedGrid id="paged-grid-0">
+              {{CUT(@recentlyAdded/size:CUT:0=CUT|1=)}}
+              <fourByThreePoster id="{{VAL(key)}}" featured="true" accessibilityLabel="{{VAL(title)}}" alwaysShowTitles="{{VAL($showtitles_library::Highlighted Only=false|Show All=true)}}"
+                  onPlay="atv.loadURL('{{URL(key:::PlexConnect=Play_Video_Pause&amp;PlexConnectRatingKey={{VAL(ratingKey)}})}}')"
+                  onSelect="atv.loadURL('{{URL(key:::includeExtras=1&amp;PlexConnect={{VAL(type::movie=Movie_|episode=Episode_)}}PrePlay)}}')"
+                  onHoldSelect="scrobbleMenu('{{URL(key:::PlexConnect=Scrobble_MenuVideo)}}')">
+                  {{PAGEDCOPY(@recentlyAdded/Video,6,1)}}
+                  {{VAR(items:NoKey:TRUE)}}
+                  <title>{{VAL(title)}}</title>
+                  <subtitle>{{VAL(year:&#x00AD;)}}</subtitle>
+                  <image>{{IMAGEURL(thumb::384)}}</image>
+                  <defaultImage>resource://Poster.png</defaultImage>
+              </fourByThreePoster>
+          </pagedGrid>
+         
+         
+        <!-- <shelf id="shelf_0" columnCount="7">
               {{CUT(@recentlyAdded/size:CUT:0=CUT|1=)}}
               <sections>
                   <shelfSection>
@@ -60,7 +58,7 @@
                                   onSelect="atv.loadURL('{{URL(key:::includeExtras=1&amp;PlexConnect=Movie_PrePlay)}}')"
                                   onHoldSelect="scrobbleMenu('{{URL(key:::PlexConnect=Scrobble_MenuVideo)}}')">
                               {{COPY(@recentlyAdded/Video)}}
-                              {{VAR(items:NoKey:TRUE)}}
+                              {{VAR(items:NoKey:TRUE)}} 
                               <title>{{VAL(title)}}</title>
                               <subtitle>{{VAL(year:&#x00AD;)}}</subtitle>
                               <image>{{IMAGEURL(thumb::384)}}</image>
@@ -69,12 +67,12 @@
                       </items>
                   </shelfSection>
               </sections>
-          </shelf>-->
+          </shelf> -->
           
           <collectionDivider alignment="left" accessibilityLabel="Movies">
               <title></title>
           </collectionDivider>
-
+          
           <grid columnCount="5" id="grid_0">
               <items>
                   <goldenPoster id="{{VAL(key)}}" alwaysShowTitles="{{VAL($showtitles_movies::Highlighted Only=false|Show All=true)}}"
@@ -82,7 +80,7 @@
                       onSelect="atv.loadURL('{{URL(key:::includeExtras=1&amp;PlexConnect=Movie_PrePlay)}}')"
                       onHoldSelect="scrobbleMenu('{{URL(key:::PlexConnect=Scrobble_MenuVideo)}}')">
                       {{COPY(Video)}}
-                      <title>{{VAL(title)}} ({{VAL(year:&#x00AD;)}})</title>
+                      <title>{{VAL(title)}}</title>
                       <image>{{IMAGEURL(thumb::768)}}</image>
                       <defaultImage>resource://Poster.png</defaultImage>
                   </goldenPoster>

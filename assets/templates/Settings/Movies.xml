@@ -80,32 +80,33 @@
           
           
             <items>
-              <oneLineMenuItem id="Movie_Extras" onSelect="toggleSettings('Movie_Extras', 'Settings_Movies')">
-                <label>{{TEXT(Movie Extras)}}</label>
-                <rightLabel>{{SETTING(movie_extras)}}</rightLabel>
+              <oneLineMenuItem id="MoviePrePlay_BottomShelf" onSelect="toggleSettings('MoviePrePlay_BottomShelf', 'Settings_Movies')">
+                <label>{{TEXT(PrePlay Bottom Shelf)}}</label>
+                <rightLabel>{{SETTING(moviepreplay_bottomshelf)}}</rightLabel>
               </oneLineMenuItem>
-            </items>
+              </items>
           </menuSection>
           
           <menuSection>
-            <header>
-              <horizontalDivider alignment="left">
-                <title>{{TEXT(Movie PrePlay)}}</title>
-              </horizontalDivider>
-            </header>
-          
-          
-            <items>
-              <oneLineMenuItem id="MovieLayers" onSelect="toggleSettings('MovieLayers', 'Settings_Movies')">
-                <label>{{TEXT(Movie Layer)}}</label>
-                <rightLabel>{{SETTING(movielayers)}}</rightLabel>
-              </oneLineMenuItem>
-              <oneLineMenuItem id="MoviePosters" onSelect="toggleSettings('MoviePosters', 'Settings_Movies')">
-                <label>{{TEXT(Movie Poster)}}</label>
-                <rightLabel>{{SETTING(movieposters)}}</rightLabel>
-              </oneLineMenuItem>
-            </items>
+              <header>
+                  <horizontalDivider alignment="left">
+                      <title>{{TEXT(Movie PrePlay)}}</title>
+                  </horizontalDivider>
+              </header>
+              
+              
+              <items>
+                  <oneLineMenuItem id="MovieLayers" onSelect="toggleSettings('MovieLayers', 'Settings_Movies')">
+                      <label>{{TEXT(Movie Layer)}}</label>
+                      <rightLabel>{{SETTING(movielayers)}}</rightLabel>
+                  </oneLineMenuItem>
+                  <oneLineMenuItem id="MoviePosters" onSelect="toggleSettings('MoviePosters', 'Settings_Movies')">
+                      <label>{{TEXT(Movie Poster)}}</label>
+                      <rightLabel>{{SETTING(movieposters)}}</rightLabel>
+                  </oneLineMenuItem>
+              </items>
           </menuSection>
+          
 
           <menuSection>
             <header>

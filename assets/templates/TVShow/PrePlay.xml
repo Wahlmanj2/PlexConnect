@@ -35,17 +35,17 @@
               'lineheight'  : '175',\
               'layers': ["PlexPrePlay{{VAL($fanarttint::On=Text|Off=)}}","PlexPrePlayLineTV"]\
               })}})}})}}	      
-	    </image>{{CUT($showlayers::Hide=CUT|Show=)}}
-	    
-	      <image insets="0, 0, {{VAL(^aTVScreenResolution:1:720=440|1080=690)}}, 0" required="true">
-	      {{URL(:/fanartcache/{{getBackground({{EVAL({\
+          </image>{{CUT($showlayers::Hide=CUT|Show=)}}
+          
+          <image insets="0, 0, {{VAL(^aTVScreenResolution:1:720=440|1080=690)}}, 0" required="true">
+              {{URL(:/fanartcache/{{getBackground({{EVAL({\
               'template'    : 'plex',\
               'image'       : "{{IMAGEURL(Video/art:::)}}",\
               'resolution'  : "{{VAL(^aTVScreenResolution)}}",\
               'imageBlur'   : "{{VAL($fanartblur::1=1|2=2|3=3|0=)}}",\
               'layers': ["PlexPrePlayLineTV"]\
               })}})}})}}
-	      </image>{{CUT($showlayers::Hide=|Show=CUT)}}
+          </image>{{CUT($showlayers::Hide=|Show=CUT)}}
 	    </imageHeader>
 	  </header>
 	  
@@ -81,26 +81,23 @@
             <label>{{VAL(Video/Writer[2]/tag)}}</label>
           </row>
           <row>
-            <mediaBadges />{{MEDIABADGES(Video/Media)}}
+            <label>{{VAL(Video/Media/videoResolution:Unknown:1080=1080p|720=720p|576=SD|480=SD|sd=SD)}} {{VAL(Video/Media/audioCodec:Unknown:ac3=AC3|aac=AAC|mp3=MP3|dca=DTS|drms=DRMS)}} {{VAL(Video/Media/audioChannels:Unknown:2=Stereo|6=5.1|8=7.1)}}</label>{{CUT(^aTVFirmwareVersion:CUT:=|6=CUT)}}
+            <mediaBadges />{{MEDIABADGES(Video/Media)}}{{CUT(^aTVFirmwareVersion::=CUT|6=)}}
             <label>{{VAL(Video/Director[3]/tag)}}</label>
             <label>{{VAL(Video/Writer[3]/tag)}}</label>
-            <label>{{VAL(Video/Producer[3]/tag)}}</label>
+            
           </row>
           <row>
-            <label>{{VAL(Video/Director[4]/tag)}}</label>
-            <label>{{VAL(Video/Writer[4]/tag)}}</label>
-            <label>{{VAL(Video/Producer[4]/tag)}}</label>
-          </row>
-
-            <row>
-             <starRating hasUserSetRating="true">
+          <starRating hasUserSetRating="true">
               <percentage>{{EVAL({{VAL(Video/userRating:0)}} * 10)}}</percentage>
             </starRating>{{CUT(Video/userRating:CUT:0=)}}
             <starRating>
               <percentage>{{EVAL({{VAL(Video/rating:0)}} * 10)}}</percentage>
             </starRating>{{CUT(Video/userRating::0=CUT)}}
+            <label>{{VAL(Video/Director[4]/tag)}}</label>
+            <label>{{VAL(Video/Writer[4]/tag)}}</label>
           </row>
-        </rows>
+         </rows>
       </table>
 
       <centerShelf>

@@ -26,7 +26,7 @@
                'titleColor'  : "{{VAL($titlecolor::White=fafafa|Grey=878787|Plex Orange=ff8800|Apple Blue=1357d4)}}",\
                'layers'      : ["PlexGrid{{VAL($gridtint::On=Text|Off=)}}"]\
                })}})}})}}
-           </image>          
+           </image>         
 	   </imageHeader>
       </header>
       
@@ -57,11 +57,11 @@
                   {{VAR(sections:NoKey:TRUE)}}  <!--within COPY this sets the var to TRUE-->
                   
                     <title>{{VAL(title)}}</title>
-                                        <image>{{URL(:/templates/plex/images/icons/{{VAL(type)}}.png)}}</image>{{CUT($sectionicons_all::Plex=CUT|Fanart=)}}
-                                        <image>{{IMAGEURL(thumb::768)}}</image>{{CUT($sectionicons_all::Plex=|Fanart=CUT)}}
-                                        <defaultImage>resource://16X9.png</defaultImage>
-                                        <!--badgeCount></badgeCount-->
-                                    </moviePoster>
+                    <image>{{URL(:/templates/plex/images/icons/{{VAL(type)}}.png)}}</image>{{CUT($sectionicons_all::Plex=CUT|Fanart=)}}
+                    <image>{{IMAGEURL(thumb::768)}}</image>{{CUT($sectionicons_all::Plex=|Fanart=CUT)}}
+                    <defaultImage>resource://16X9.png</defaultImage>
+                    <!--badgeCount></badgeCount-->
+                    </moviePoster>
                   
                   <!-- search -->
                   <moviePoster id="{{VAL(searchKey)}}" featured="true" alwaysShowTitles="{{VAL($sectionicons::Apple=true|Plex=true|Fanart=true)}}"
@@ -70,7 +70,7 @@
                     <title>{{TEXT(Search)}}</title>
                     <image>{{URL(:/templates/plex/images/icons/search.png)}}</image>
                     <defaultImage>resource://16X9.png</defaultImage>
-                  </moviePoster>{{CUT($library_search::Show=|Hide=CUT)}} 
+                  </moviePoster> 
                   
                 </items>
               </shelfSection>

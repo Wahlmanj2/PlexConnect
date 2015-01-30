@@ -30,7 +30,7 @@
               })}})}})}}
           </image>{{CUT($episodelayers::Hide=CUT|Show=)}}
           <image insets="0, 0, {{VAL(^aTVScreenResolution:1:720=550|1080=835)}}, 0" required="true">
-          {{URL(:/fanartcache/{{getBackground({{EVAL({\
+              {{URL(:/fanartcache/{{getBackground({{EVAL({\
               
               'image'       : "{{IMAGEURL(art:::)}}",\
               'resolution'  : "{{VAL(^aTVScreenResolution)}}"\

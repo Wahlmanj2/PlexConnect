@@ -21,14 +21,14 @@
               'imageBlur'   : "{{VAL($fanartblur::1=1|2=2|3=3|0=)}}",\
               'layers'      : ["PlexSubGrid{{VAL($fanarttint::On=Text|Off=)}}"]\
               })}})}})}}
-              </image>{{CUT($episodelayers::Hide=CUT|Show=)}}
-          <image insets="0, 0, {{VAL(^aTVScreenResolution:1:720=550|1080=800)}}, 0" required="true">
-          {{URL(:/fanartcache/{{getBackground({{EVAL({\
-              
-              'image'       : "{{IMAGEURL(art:::)}}",\
-              'resolution'  : "{{VAL(^aTVScreenResolution)}}"\
-              })}})}})}}
-          </image>{{CUT($episodelayers::Hide=|Show=Hide)}}
+           </image>{{CUT($episodelayers::Hide=CUT|Show=)}}
+           <image insets="0, 0, {{VAL(^aTVScreenResolution:1:720=550|1080=800)}}, 0" required="true">
+               {{URL(:/fanartcache/{{getBackground({{EVAL({\
+               
+               'image'       : "{{IMAGEURL(art:::)}}",\
+               'resolution'  : "{{VAL(^aTVScreenResolution)}}"\
+               })}})}})}}
+           </image>{{CUT($episodelayers::Hide=|Show=Hide)}}
         </imageHeader>
       </header>
       

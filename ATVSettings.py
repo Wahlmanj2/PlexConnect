@@ -13,20 +13,21 @@ options = { \
     'playlistsview'             :('List', 'Tabbed List', 'Hide'), \
     'libraryview'               :('Grid', 'Paged Grid', 'Overview', 'List', 'Hide'), \
     'sharedlibrariesview'       :('Grid', 'Paged Grid', 'List', 'Hide'), \
-    'librariesview'             :('Overview', 'Grid', 'Paged Grid', 'List', 'Hide'), \
-    'channelview'               :('Grid', 'List', 'Tabbed List', 'Hide'), \
-    'sectionsposition'           :('Flow', 'Top'), \
+    'librariesview'             :('Hide', 'Grid', 'Paged Grid', 'Overview', 'List'), \
+    'channelview'               :('List', 'Grid', 'Tabbed List', 'Hide'), \
+    'sectionsposition'           :('Top', 'Flow'), \
     'movieview'                  :('Big Artwork', 'Grid', 'List', 'Detailed List'), \
-    'movieposters'               :('Show', 'Hide'), \
-    'movielayers'                :('Show', 'Hide'), \
     'homevideoview'              :('Grid', 'List', 'Detailed List'), \
     'showview'                   :('Big Artwork', 'Grid', 'List', 'Bookcase'), \
-    'movie_extras'                :('Show', 'Hide'), \
-    'episodeposters'             :('Show', 'Hide'), \
+    'movie_extras'               :('Show', 'Hide'), \
+    'fanart_blur'                :('0', '5', '10', '15', '20'), \
+    'movielayers'                :('Show', 'Hide'), \
     'showlayers'                 :('Show', 'Hide'), \
     'seasonlayers'               :('Show', 'Hide'), \
     'episodelayers'              :('Show', 'Hide'), \
-    'fanart_blur'               :('0', '5', '10', '15', '20'), \
+    'episodeposters'             :('Show', 'Hide'), \
+    'movieposters'               :('Show', 'Hide'), \
+    'moviepreplay_bottomshelf'   :('Extras', 'Related Movies'), \
     'episodeview'                :('List', 'Grid'), \
     'seasonview'                 :('Big Artwork', 'Coverflow', 'List'), \
     'sectionicons'               :('Fanart', 'Plex', 'Custom'), \
@@ -40,7 +41,7 @@ options = { \
     'showtitles_library'         :('Show All', 'Highlighted Only'), \
     'starttab'                   :('Library', 'Shared Libraries', 'Channels'), \
     'actorview'                  :('Movies', 'Portrait'), \
-    'flattenseason'              :('False', 'True'), \
+    'flattenseason'              :('True', 'False'), \
     'durationformat'             :('Hours/Minutes', 'Minutes'), \
     'showtitles_movies'         :('Show All', 'Highlighted Only'), \
     'showtitles_tvshows'        :('Show All', 'Highlighted Only'), \
@@ -50,11 +51,11 @@ options = { \
     'movies_navbar_unwatched'   :('unchecked', 'checked'), \
     'movies_navbar_byfolder'    :('unchecked', 'checked'), \
     'movies_navbar_collections' :('unchecked', 'checked'), \
-    'movies_navbar_genres'      :('unchecked', 'checked'), \
+    'movies_navbar_genres'      :('checked', 'unchecked'), \
     'movies_navbar_decades'     :('unchecked', 'checked'), \
     'movies_navbar_directors'   :('unchecked', 'checked'), \
     'movies_navbar_actors'      :('unchecked', 'checked'), \
-    'movies_navbar_more'        :('unchecked', 'checked'), \
+    'movies_navbar_more'        :('checked', 'unchecked'), \
     'homevideos_navbar_ondeck'      :('checked', 'unchecked'), \
     'homevideos_navbar_unwatched'   :('unchecked', 'checked'), \
     'homevideos_navbar_byfolder'    :('unchecked', 'checked'), \
@@ -65,7 +66,7 @@ options = { \
     'music_navbar_decade'           :('unchecked', 'checked'), \
     'music_navbar_year'             :('unchecked', 'checked'), \
     'music_navbar_more'             :('unchecked', 'checked'), \
-    'tv_navbar_ondeck'          :('checked', 'unchecked'), \
+    'tv_navbar_ondeck'          :('unchecked', 'checked'), \
     'tv_navbar_unwatched'       :('unchecked', 'checked'), \
     'tv_navbar_genres'          :('unchecked', 'checked'), \
     'tv_navbar_more'            :('unchecked', 'checked'), \
@@ -90,8 +91,9 @@ options = { \
     'timeformat'        :('24 Hour', '12 Hour'), \
     'myplex_user'       :('', ), \
     'myplex_auth'       :('', ), \
-    'myplex_homeuser'   :('', ), \
-    'myplex_homeauth'   :('', ), \
+    'plexhome_enable'   :('False', 'True'), \
+    'plexhome_user'     :('', ), \
+    'plexhome_auth'     :('', ), \
 #   template options
     'subtitlecolor'             :('Grey', 'White', 'Plex Orange', 'Apple Blue'), \
     'titlecolor'                :('White', 'Grey', 'Plex Orange',  'Apple Blue'), \
