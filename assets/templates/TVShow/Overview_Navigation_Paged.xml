@@ -1,70 +1,70 @@
 <atv>
-  <head>
-    <script src="{{URL(:/js/utils.js)}}" />
-  </head>
-
-  <body>
-      {{ADDXML(OnDeck::/library/sections/{{VAL(librarySectionID)}}/onDeck?X-Plex-Container-Start=0&amp;X-Plex-Container-Size=20)}}
-      {{VAR(items:NoKey:FALSE)}}
-      
-    <scroller id="Show_Overview" volatile="true">
-      <header>
-          
-          <imageHeader>
-              <image insets="0, 0, {{VAL(^aTVScreenResolution:1:720=413|1080=620)}}, 0" required="true">
-	      <!--{{URL(:/fanartcache/{{getBackground({{EVAL({\
-              'template'    : 'plex',\
-              'title'       : "{{EVAL(quote_plus("{{VAL(title1)}}"))}}",\
-              'layers'      : ["PlexSubGrid{{VAL($fanarttint::On=Text|Off=)}}"]\
-              })}})}})}}-->
-          {{BACKGROUNDURL(@OnDeck/Video/art::Overview:{{EVAL(quote_plus("{{VAL(@OnDeck/Video/title)}}"))}}:{{EVAL(quote_plus("{{VAL(@OnDeck/Video/grandparentTitle)}} - {{episodestring(@OnDeck/Video/parentIndex:0:@OnDeck/Video/index:0)}}"))}}:35:20:FFFFFF:left:bottom:70:485:-50:56:100:{{EVAL(quote_plus("{{VAL(title1)}}"))}})}}
-	    </image>
-          </imageHeader>
-      </header>
-      <items>
-          <collectionDivider alignment="left" accessibilityLabel="On Deck">
-              <title>{{TEXT(On Deck)}}</title>
-          </collectionDivider>{{CUT(@OnDeck/size:CUT:0=CUT|1=)}}
-          
-          <pagedGrid id="paged-grid-0">
-              {{CUT(@OnDeck/size:CUT:0=CUT|1=)}}
-              <fourByThreePoster id="{{VAL(key)}}" featured="true" accessibilityLabel="{{VAL(title)}}" alwaysShowTitles="{{VAL($showtitles_library::Highlighted Only=false|Show All=true)}}"
-                  onPlay="atv.loadURL('{{URL(key:::PlexConnect=Play_Video_Pause&amp;PlexConnectRatingKey={{VAL(ratingKey)}})}}')"
-                  onSelect="atv.loadURL('{{URL(key:::includeExtras=1&amp;PlexConnect=TVShow_PrePlay)}}')"
-                  onHoldSelect="scrobbleMenu('{{URL(key:::PlexConnect=Scrobble_MenuTVOnDeck)}}')">
-                  {{PAGEDCOPY(@OnDeck/Video,6,1)}}
-                  {{VAR(items:NoKey:TRUE)}}
-                  <title>{{VAL(title)}}</title>
-                  <subtitle>{{episodestring(parentIndex:0:index:0)}}</subtitle>
-                  <image>{{IMAGEURL(grandparentThumb::384)}}</image>
-                  <defaultImage>resource://Poster.png</defaultImage>
-              </fourByThreePoster>
-          </pagedGrid>
-          
-          <collectionDivider alignment="left" accessibilityLabel="TV Shows">
-              <title><!--{{EVAL('{{URL(key)}}'.replace('all', ''))}}--></title>
-          </collectionDivider>
-          
-        <grid columnCount="5" id="grid_0">
-          <items>
-            <goldenPoster id="{{VAL(key)}}" alwaysShowTitles="{{VAL($showtitles_tvshows::Highlighted Only=false|Show All=true)}}"
-                        onPlay="atv.loadURL('{{URL(key:::PlexConnect=TVShow_Season)}}')"
-                        onSelect="atv.loadURL('{{URL(key:::PlexConnect=TVShow_Season)}}')"
-                        onHoldSelect="scrobbleMenu('{{URL(key:::PlexConnect=Scrobble_Menu)}}')">
-              {{COPY(Directory)}}
-              <title>{{VAL(title)}}</title>
-              <image>{{IMAGEURL(thumb::768)}}</image>
-              <defaultImage>resource://Poster.png</defaultImage>
-              <badgeCount>{{unwatchedCountGrid(leafCount:0:viewedLeafCount:0)}}</badgeCount>{{CUT($showunwatched::False=CUT|True=)}}
-            </goldenPoster>{{CUT(Directory/title:CUT:=)}}
-
-            <goldenPoster id="none">
-              <title>{{TEXT(No Unwatched Shows)}}</title>
-              <defaultImage>resource://Poster.png</defaultImage>
-            </goldenPoster>{{CUT(Directory/title::=CUT)}}
-          </items>
-        </grid>
-      </items>
-    </scroller>
-  </body>
+    <head>
+        <script src="{{URL(:/js/utils.js)}}" />
+    </head>
+    
+    <body>
+        {{ADDXML(OnDeck::/library/sections/{{VAL(librarySectionID)}}/onDeck?X-Plex-Container-Start=0&amp;X-Plex-Container-Size=20)}}
+        {{VAR(items:NoKey:FALSE)}}
+        
+        <scroller id="Show_Overview" volatile="true">
+            <header>
+                
+                <imageHeader>
+                    <image insets="0, 0, {{VAL(^aTVScreenResolution:1:720=413|1080=620)}}, 0" required="true">
+                        <!--{{URL(:/fanartcache/{{getBackground({{EVAL({\
+                         'template'    : 'plex',\
+                         'title'       : "{{EVAL(quote_plus("{{VAL(title1)}}"))}}",\
+                         'layers'      : ["PlexSubGrid{{VAL($fanarttint::On=Text|Off=)}}"]\
+                         })}})}})}}-->
+                        {{BACKGROUNDURL(@OnDeck/Video/art::Overview:{{EVAL(quote_plus("{{VAL(@OnDeck/Video/title)}}"))}}:{{EVAL(quote_plus("{{VAL(@OnDeck/Video/grandparentTitle)}} - {{episodestring(@OnDeck/Video/parentIndex:0:@OnDeck/Video/index:0)}}"))}}:35:20:FFFFFF:left:bottom:70:485:-50:56:100:{{EVAL(quote_plus("{{VAL(title1)}}"))}})}}
+                    </image>
+                </imageHeader>
+            </header>
+            <items>
+                <collectionDivider alignment="left" accessibilityLabel="On Deck">
+                    <title>{{TEXT(On Deck)}}</title>
+                </collectionDivider>{{CUT(@OnDeck/size:CUT:0=CUT|1=)}}
+                
+                <pagedGrid id="paged-grid-0">
+                    {{CUT(@OnDeck/size:CUT:0=CUT|1=)}}
+                    <fourByThreePoster id="{{VAL(key)}}" featured="true" accessibilityLabel="{{VAL(title)}}" alwaysShowTitles="{{VAL($showtitles_library::Highlighted Only=false|Show All=true)}}"
+                        onPlay="atv.loadURL('{{URL(key:::PlexConnect=Play_Video_Pause&amp;PlexConnectRatingKey={{VAL(ratingKey)}})}}')"
+                        onSelect="atv.loadURL('{{URL(key:::includeExtras=1&amp;PlexConnect=TVShow_PrePlay)}}')"
+                        onHoldSelect="scrobbleMenu('{{URL(key:::PlexConnect=Scrobble_MenuTVOnDeck)}}')">
+                        {{PAGEDCOPY(@OnDeck/Video,6,1)}}
+                        {{VAR(items:NoKey:TRUE)}}
+                        <title>{{VAL(title)}}</title>
+                        <subtitle>{{episodestring(parentIndex:0:index:0)}}</subtitle>
+                        <image>{{IMAGEURL(grandparentThumb::384)}}</image>
+                        <defaultImage>resource://Poster.png</defaultImage>
+                    </fourByThreePoster>
+                </pagedGrid>
+                
+                <collectionDivider alignment="left" accessibilityLabel="TV Shows">
+                    <title><!--{{EVAL('{{URL(key)}}'.replace('all', ''))}}--></title>
+                </collectionDivider>
+                
+                <grid columnCount="5" id="grid_0">
+                    <items>
+                        <goldenPoster id="{{VAL(key)}}" alwaysShowTitles="{{VAL($showtitles_tvshows::Highlighted Only=false|Show All=true)}}"
+                            onPlay="atv.loadURL('{{URL(key:::PlexConnect=TVShow_Season)}}')"
+                            onSelect="atv.loadURL('{{URL(key:::PlexConnect=TVShow_Season)}}')"
+                            onHoldSelect="scrobbleMenu('{{URL(key:::PlexConnect=Scrobble_Menu)}}')">
+                            {{COPY(Directory)}}
+                            <title>{{VAL(title)}}</title>
+                            <image>{{IMAGEURL(thumb::768)}}</image>
+                            <defaultImage>resource://Poster.png</defaultImage>
+                            <badgeCount>{{unwatchedCountGrid(leafCount:0:viewedLeafCount:0)}}</badgeCount>{{CUT($showunwatched::False=CUT|True=)}}
+                        </goldenPoster>{{CUT(Directory/title:CUT:=)}}
+                        
+                        <goldenPoster id="none">
+                            <title>{{TEXT(No Unwatched Shows)}}</title>
+                            <defaultImage>resource://Poster.png</defaultImage>
+                        </goldenPoster>{{CUT(Directory/title::=CUT)}}
+                    </items>
+                </grid>
+            </items>
+        </scroller>
+    </body>
 </atv>

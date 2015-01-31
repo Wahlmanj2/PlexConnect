@@ -19,7 +19,7 @@
                     <image insets="0, 0, {{VAL(^aTVScreenResolution:1:720=630|1080=945)}}, 0" required="true">
                         {{URL(:/fanartcache/{{getBackground({{EVAL({\
                         'template'    : 'plex',\
-                        'title'       : "{{EVAL(quote_plus("{{TEXT(All Libraries)}}"))}}",\
+                        'title'       : "{{EVAL(quote_plus("{{TEXT(All Plex Libraries)}}"))}}",\
                         'image'       : "backgrounds/plex{{VAL($menubackground::Grey=default|Plex Orange=orange|Apple Blue=blue|Green=green)}}.png",\
                         'resolution'  : "{{VAL(^aTVScreenResolution)}}",\
                         'font'        : "fonts/OpenSans/OpenSans-Light.ttf",\
