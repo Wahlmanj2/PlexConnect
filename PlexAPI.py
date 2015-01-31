@@ -448,7 +448,7 @@ def getXMLFromMultiplePMS(ATV_udid, path, type, options={}):
     root.set('friendlyName', type+' Servers')
     
     for uuid in g_PMS.get(ATV_udid, {}):
-        if (type=='all') or \
+        if (type=='all' and getPMSProperty(ATV_udid, uuid, 'name')!='plex.tv') or \
            (type=='owned' and getPMSProperty(ATV_udid, uuid, 'owned')=='1') or \
            (type=='shared' and getPMSProperty(ATV_udid, uuid, 'owned')=='0') or \
            (type=='local' and getPMSProperty(ATV_udid, uuid, 'local')=='1') or \
