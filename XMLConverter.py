@@ -352,6 +352,15 @@ def XML_PMS2aTV(PMS_address, path, options):
         dir = dir.replace('iTunes', 'Music')
         cmd = 'Overview'
     
+    # Overview Paged case scanners
+    if cmd.find('Pagedview') != -1:
+        dprint(__name__, 0, "Overview Paged scanner found, updating command.")
+        parts = cmd.split('_')
+        dir = parts[0].replace('Series', 'TVShow')
+        dir = dir.replace('Video', 'HomeVideo')
+        dir = dir.replace('iTunes', 'Music')
+        cmd = 'Pagedview'
+    
     # Special case scanners
     if cmd.find('Scanner') != -1:
         dprint(__name__, 0, "Section scanner found, updating command.")

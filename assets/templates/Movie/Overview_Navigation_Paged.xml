@@ -7,7 +7,7 @@
       {{ADDXML(recentlyAdded::/library/sections/{{VAL(librarySectionID)}}/recentlyAdded?X-Plex-Container-Start=0&amp;X-Plex-Container-Size=20)}}
       {{VAR(items:NoKey:FALSE)}}
       
-    <scroller id="Movie_Overview">
+    <scroller id="Movie_Pagedview">
       <header>
           <imageHeader>
               <image insets="0, 0, {{VAL(^aTVScreenResolution:1:720=413|1080=635)}}, 0" required="true">
@@ -32,26 +32,20 @@
               <title>{{TEXT(Recently Added)}}</title>
           </collectionDivider>{{CUT(@recentlyAdded/size:CUT:0=CUT|1=)}}
           
-        <shelf id="shelf_0" columnCount="7">
+          <pagedGrid id="paged-grid-0">
               {{CUT(@recentlyAdded/size:CUT:0=CUT|1=)}}
-              <sections>
-                  <shelfSection>
-                      <items>
-                          <fourByThreePoster id="{{VAL(key)}}" featured="true" accessibilityLabel="{{VAL(title)}}" alwaysShowTitles="{{VAL($showtitles_library::Highlighted Only=false|Show All=true)}}"
-                                  onPlay="atv.loadURL('{{URL(key:::PlexConnect=Play_Video&amp;PlexConnectRatingKey={{VAL(ratingKey)}})}}')"
-                                  onSelect="atv.loadURL('{{URL(key:::includeExtras=1&amp;PlexConnect=Movie_PrePlay)}}')"
-                                  onHoldSelect="scrobbleMenu('{{URL(key:::PlexConnect=Scrobble_MenuVideo)}}')">
-                              {{COPY(@recentlyAdded/Video)}}
-                              {{VAR(items:NoKey:TRUE)}} 
-                              <title>{{VAL(title)}}</title>
-                              <subtitle>{{VAL(year:&#x00AD;)}}</subtitle>
-                              <image>{{IMAGEURL(thumb::384)}}</image>
-                              <defaultImage>resource://Poster.png</defaultImage>
-                          </fourByThreePoster>
-                      </items>
-                  </shelfSection>
-              </sections>
-          </shelf>
+              <fourByThreePoster id="{{VAL(key)}}" featured="true" accessibilityLabel="{{VAL(title)}}" alwaysShowTitles="{{VAL($showtitles_library::Highlighted Only=false|Show All=true)}}"
+                  onPlay="atv.loadURL('{{URL(key:::PlexConnect=Play_Video_Pause&amp;PlexConnectRatingKey={{VAL(ratingKey)}})}}')"
+                  onSelect="atv.loadURL('{{URL(key:::includeExtras=1&amp;PlexConnect={{VAL(type::movie=Movie_|episode=Episode_)}}PrePlay)}}')"
+                  onHoldSelect="scrobbleMenu('{{URL(key:::PlexConnect=Scrobble_MenuVideo)}}')">
+                  {{PAGEDCOPY(@recentlyAdded/Video,6,1)}}
+                  {{VAR(items:NoKey:TRUE)}}
+                  <title>{{VAL(title)}}</title>
+                  <subtitle>{{VAL(year:&#x00AD;)}}</subtitle>
+                  <image>{{IMAGEURL(thumb::384)}}</image>
+                  <defaultImage>resource://Poster.png</defaultImage>
+              </fourByThreePoster>
+          </pagedGrid>
           
           <collectionDivider alignment="left" accessibilityLabel="Movies">
               <title></title>
