@@ -1,3 +1,3 @@
 <atv>
-    <redirect template="Movie/Overview_Navigation_Paged.xml" />
+  <redirect template="Movie/Overview_Navigation_Paged.xml" />
 </atv>

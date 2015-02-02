@@ -1,25 +1,25 @@
 #!/usr/bin/env python
 
 """
-    Sources:
-    
-    ElementTree
-    http://docs.python.org/2/library/xml.etree.elementtree.html#xml.etree.ElementTree.SubElement
-    
-    trailers.apple.com root URL
-    http://trailers.apple.com/appletv/us/js/application.js
-    navigation pane
-    http://trailers.apple.com/appletv/us/nav.xml
-    ->top trailers: http://trailers.apple.com/appletv/us/index.xml
-    ->calendar:     http://trailers.apple.com/appletv/us/calendar.xml
-    ->browse:       http://trailers.apple.com/appletv/us/browse.xml
-    """
+Sources:
+
+ElementTree
+http://docs.python.org/2/library/xml.etree.elementtree.html#xml.etree.ElementTree.SubElement
+
+trailers.apple.com root URL
+http://trailers.apple.com/appletv/us/js/application.js
+navigation pane
+http://trailers.apple.com/appletv/us/nav.xml
+->top trailers: http://trailers.apple.com/appletv/us/index.xml
+->calendar:     http://trailers.apple.com/appletv/us/calendar.xml
+->browse:       http://trailers.apple.com/appletv/us/browse.xml
+"""
 
 import re
 import os
 import sys
 import traceback
-import inspect
+import inspect 
 import string, random
 import copy  # deepcopy()
 
@@ -55,67 +55,67 @@ def setATVSettings(cfg):
 
 
 """
-    # aTV XML ErrorMessage - hardcoded XML File
-    """
+# aTV XML ErrorMessage - hardcoded XML File
+"""
 def XML_Error(title, desc):
     errorXML = '\
-    <?xml version="1.0" encoding="UTF-8"?>\n\
-    <atv>\n\
+<?xml version="1.0" encoding="UTF-8"?>\n\
+<atv>\n\
     <body>\n\
-    <dialog id="com.sample.error-dialog">\n\
-    <title>' + title + '</title>\n\
-    <description>' + desc + '</description>\n\
-    </dialog>\n\
+        <dialog id="com.sample.error-dialog">\n\
+            <title>' + title + '</title>\n\
+            <description>' + desc + '</description>\n\
+        </dialog>\n\
     </body>\n\
-    </atv>\n\
-    ';
+</atv>\n\
+';
     return errorXML
 
 
 
 def XML_PlayVideo_ChannelsV1(baseURL, path):
     XML = '\
-    <atv>\n\
-    <body>\n\
+<atv>\n\
+  <body>\n\
     <videoPlayer id="com.sample.video-player">\n\
-    <httpFileVideoAsset id="' + path + '">\n\
-    <mediaURL>' + baseURL + path + '</mediaURL>\n\
-    <title>*title*</title>\n\
-    <!--bookmarkTime>{{EVAL(int({{VAL(Video/viewOffset:0)}}/1000))}}</bookmarkTime-->\n\
-    <videoPlayerSettings>\n\
-    <!-- PMS, OSD settings, ... -->\n\
-    <baseURL>' + baseURL + '</baseURL>\n\
-    <accessToken></accessToken>\n\
-    <showClock>False</showClock>\n\
-    <timeFormat></timeFormat>\n\
-    <clockPosition></clockPosition>\n\
-    <overscanAdjust></overscanAdjust>\n\
-    <showEndtime>False</showEndtime>\n\
-    <subtitleSize></subtitleSize>\n\
-    </videoPlayerSettings>\n\
-    <myMetadata>\n\
-    <key></key>\n\
-    <ratingKey></ratingKey>\n\
-    <duration></duration>\n\
-    <subtitleURL></subtitleURL>\n\
-    </myMetadata>\n\
-    </httpFileVideoAsset>\n\
+      <httpFileVideoAsset id="' + path + '">\n\
+        <mediaURL>' + baseURL + path + '</mediaURL>\n\
+        <title>*title*</title>\n\
+        <!--bookmarkTime>{{EVAL(int({{VAL(Video/viewOffset:0)}}/1000))}}</bookmarkTime-->\n\
+        <videoPlayerSettings>\n\
+          <!-- PMS, OSD settings, ... -->\n\
+          <baseURL>' + baseURL + '</baseURL>\n\
+          <accessToken></accessToken>\n\
+          <showClock>False</showClock>\n\
+          <timeFormat></timeFormat>\n\
+          <clockPosition></clockPosition>\n\
+          <overscanAdjust></overscanAdjust>\n\
+          <showEndtime>False</showEndtime>\n\
+          <subtitleSize></subtitleSize>\n\
+        </videoPlayerSettings>\n\
+        <myMetadata>\n\
+          <key></key>\n\
+          <ratingKey></ratingKey>\n\
+          <duration></duration>\n\
+          <subtitleURL></subtitleURL>\n\
+        </myMetadata>\n\
+      </httpFileVideoAsset>\n\
     </videoPlayer>\n\
-    </body>\n\
-    </atv>\n\
-    ';
+  </body>\n\
+</atv>\n\
+';
     dprint(__name__,2 , XML)
     return XML
 
 
 
 """
-    global list of known aTVs - to look up UDID by IP if needed
-    
-    parameters:
+global list of known aTVs - to look up UDID by IP if needed
+
+parameters:
     udid - from options['PlexConnectUDID']
     ip - from client_address btw options['aTVAddress']
-    """
+"""
 g_ATVList = {}
 
 def declareATV(udid, ip):
@@ -135,12 +135,12 @@ def getATVFromIP(ip):
 
 
 """
-    # XML converter functions
-    # - translate aTV request and send to PMS
-    # - receive reply from PMS
-    # - select XML template
-    # - translate to aTV XML
-    """
+# XML converter functions
+# - translate aTV request and send to PMS
+# - receive reply from PMS
+# - select XML template
+# - translate to aTV XML
+"""
 def XML_PMS2aTV(PMS_address, path, options):
     # double check aTV UDID, redo from client IP if needed/possible
     if not 'PlexConnectUDID' in options:
@@ -148,34 +148,34 @@ def XML_PMS2aTV(PMS_address, path, options):
         if UDID:
             options['PlexConnectUDID'] = UDID
         else:
-            # aTV unidentified, UDID not known
+            # aTV unidentified, UDID not known    
             return XML_Error('PlexConnect','Unexpected error - unidentified ATV')
     else:
         declareATV(options['PlexConnectUDID'], options['aTVAddress'])  # update with latest info
-
+    
     UDID = options['PlexConnectUDID']
-
+    
     # determine PMS_uuid, PMSBaseURL from IP (PMS_mark)
     PMS_uuid = PlexAPI.getPMSFromAddress(UDID, PMS_address)
     PMS_baseURL = PlexAPI.getPMSProperty(UDID, PMS_uuid, 'baseURL')
-
+    
     # check cmd to work on
     cmd = ''
     dir = ''
     channelsearchURL = ''
-
+    
     if 'PlexConnect' in options:
         cmd = options['PlexConnect']
-
+    
     dprint(__name__, 1, "---------------------------------------------")
     dprint(__name__, 1, "PMS, path: {0} {1} ", PMS_address, path)
     dprint(__name__, 1, "Initial Command: {0}", cmd)
-
+    
     # check aTV language setting
     if not 'aTVLanguage' in options:
         dprint(__name__, 1, "no aTVLanguage - pick en")
         options['aTVLanguage'] = 'en'
-
+    
     # XML Template selector
     # - PlexConnect command
     # - path
@@ -183,7 +183,7 @@ def XML_PMS2aTV(PMS_address, path, options):
     XMLtemplate = ''
     PMS = None
     PMSroot = None
-
+    
     # XML direct request or
     # XMLtemplate defined by solely PlexConnect Cmd
     if path.endswith(".xml"):
@@ -200,18 +200,18 @@ def XML_PMS2aTV(PMS_address, path, options):
         cmd = parts1[1]
         XMLtemplate = dir + '/' + cmd + '.xml'
         dprint(__name__, 2, "ATVSettings->Toggle: {0} in template: {1}", parts[0], parts[1])
-        path = ''  # clear path - we don't need PMS-XML
-
+        path = ''  # clear path - we don't need PMS-XML  
+    
     elif cmd=='SaveSettings':
         g_ATVSettings.saveSettings();
         return XML_Error('PlexConnect', 'SaveSettings!')  # not an error - but aTV won't care anyways.
-
+        
     elif cmd=='PlayVideo_ChannelsV1':
         dprint(__name__, 1, "playing Channels XML Version 1: {0}".format(path))
         auth_token = PlexAPI.getPMSProperty(UDID, PMS_uuid, 'accesstoken')
         path = PlexAPI.getDirectVideoPath(path, auth_token)
         return XML_PlayVideo_ChannelsV1(PMS_baseURL, path)  # direct link, no PMS XML available
-
+    
     elif cmd=='PlayTrailer':
         trailerID = options['PlexConnectTrailerID']
         info = urllib2.urlopen("http://youtube.com/get_video_info?video_id=" + trailerID).read()
@@ -231,25 +231,25 @@ def XML_PMS2aTV(PMS_address, path, options):
             return XML_Error('PlexConnect','Youtube: ATV compatible Trailer not available')
         
         return XML_PlayVideo_ChannelsV1('', url.replace('&','&amp;'))
-
+        
     elif cmd=='MyPlexLogin':
         dprint(__name__, 2, "MyPlex->Logging In...")
         if not 'PlexConnectCredentials' in options:
             return XML_Error('PlexConnect', 'MyPlex Sign In called without Credentials.')
         
-        parts = options['PlexConnectCredentials'].split(':',1)
+        parts = options['PlexConnectCredentials'].split(':',1)        
         (username, auth_token) = PlexAPI.MyPlexSignIn(parts[0], parts[1], options)
         PlexAPI.discoverPMS(UDID, g_param['CSettings'], g_param['IP_self'], {'MyPlex': auth_token})
-
+        
         g_ATVSettings.setSetting(UDID, 'myplex_user', username)
         g_ATVSettings.setSetting(UDID, 'myplex_auth', auth_token)
         g_ATVSettings.setSetting(UDID, 'plexhome_enable', 'False')
         g_ATVSettings.setSetting(UDID, 'plexhome_user', '')
         g_ATVSettings.setSetting(UDID, 'plexhome_auth', '')
-
+        
         XMLtemplate = 'Settings/Main.xml'
         path = ''  # clear path - we don't need PMS-XML
-
+    
     elif cmd=='MyPlexLogout':
         dprint(__name__, 2, "MyPlex->Logging Out...")
         
@@ -265,7 +265,7 @@ def XML_PMS2aTV(PMS_address, path, options):
         
         XMLtemplate = 'Settings/Main.xml'
         path = ''  # clear path - we don't need PMS-XML
-
+    
     elif cmd=='MyPlexSwitchHomeUser':
         dprint(__name__, 2, "MyPlex->switch HomeUser...")
         if not 'PlexConnectCredentials' in options:
@@ -284,7 +284,7 @@ def XML_PMS2aTV(PMS_address, path, options):
         g_ATVSettings.setSetting(UDID, 'plexhome_auth', plexHome_auth)
         
         XMLtemplate = 'Settings/PlexHome.xml'
-
+    
     elif cmd=='MyPlexLogoutHomeUser':
         dprint(__name__, 2, "MyPlex->Logging Out HomeUser...")
         
@@ -296,7 +296,7 @@ def XML_PMS2aTV(PMS_address, path, options):
         g_ATVSettings.setSetting(UDID, 'plexhome_auth', '')
         
         XMLtemplate = 'Settings/PlexHome.xml'
-
+    
     elif cmd=='MyPlexLeaveHome':
         dprint(__name__, 2, "MyPlex->Leave Home...")
         
@@ -308,7 +308,7 @@ def XML_PMS2aTV(PMS_address, path, options):
         g_ATVSettings.setSetting(UDID, 'plexhome_auth', '')
         
         XMLtemplate = 'Settings/PlexHome.xml'
-
+    
     elif cmd.startswith('Discover'):
         tokenDict = {}
         tokenDict['MyPlex'] = g_ATVSettings.getSetting(UDID, 'myplex_auth')
@@ -317,32 +317,32 @@ def XML_PMS2aTV(PMS_address, path, options):
         PlexAPI.discoverPMS(UDID, g_param['CSettings'], g_param['IP_self'], tokenDict)
         
         return XML_Error('PlexConnect', 'Discover!')  # not an error - but aTV won't care anyways.
-
-    elif cmd.startswith('purgeFanart'):
-        import PILBackgrounds
-        PILBackgrounds.purgeFanart()
-        #opt = cmd[len('purgeFanart:'):]  # cut command:
-        #parts = opt.split('+')
-        #XMLtemplate = parts[1] + ".xml"
-        dprint(__name__, 1, 'purging: {0}', "Fanart Cache")  # Debug
-        path = ''  # clear path - we don't need PMS-XML
+        
+    elif cmd.startswith('purgeFanart'): 
+        import PILBackgrounds 
+        PILBackgrounds.purgeFanart()   
+        #opt = cmd[len('purgeFanart:'):]  # cut command: 
+        #parts = opt.split('+') 
+        #XMLtemplate = parts[1] + ".xml" 
+        dprint(__name__, 1, 'purging: {0}', "Fanart Cache")  # Debug  
+        path = ''  # clear path - we don't need PMS-XML   
 
     # Special case path requests
     if path.startswith('/search?'):
         XMLtemplate = 'Search/Results.xml'
-
+        
     elif path.find('serviceSearch') != -1 or (path.find('video') != -1 and path.lower().find('search') != -1):
         XMLtemplate = 'Channels/VideoSearchResults.xml'
-
+    
     elif path.find('SearchResults') != -1:
         XMLtemplate = 'Channels/VideoSearchResults.xml'
-
-    # Not a special command so split it
+        
+    # Not a special command so split it 
     if cmd.find('_') != -1:
         parts = cmd.split('_', 1)
         dir = parts[0]
         cmd = parts[1]
-
+    
     # Overview case scanners
     if cmd.find('Overview') != -1:
         dprint(__name__, 0, "Overview scanner found, updating command.")
@@ -351,7 +351,7 @@ def XML_PMS2aTV(PMS_address, path, options):
         dir = dir.replace('Video', 'HomeVideo')
         dir = dir.replace('iTunes', 'Music')
         cmd = 'Overview'
-
+        
     # Overview Paged case scanners
     if cmd.find('Pagedview') != -1:
         dprint(__name__, 0, "Overview Paged scanner found, updating command.")
@@ -360,7 +360,7 @@ def XML_PMS2aTV(PMS_address, path, options):
         dir = dir.replace('Video', 'HomeVideo')
         dir = dir.replace('iTunes', 'Music')
         cmd = 'Pagedview'
-
+    
     # Special case scanners
     if cmd.find('Scanner') != -1:
         dprint(__name__, 0, "Section scanner found, updating command.")
@@ -374,11 +374,11 @@ def XML_PMS2aTV(PMS_address, path, options):
     if dir != '':
         XMLtemplate = dir + '/' + cmd + '.xml'
         if path == '/': path = ''
-
+    
     dprint(__name__, 1, "Split Directory: {0} Command: {1}", dir, cmd)
     dprint(__name__, 1, "XMLTemplate: {0}", XMLtemplate)
     dprint(__name__, 1, "---------------------------------------------")
-
+    
     PMSroot = None
     while True:
         # request PMS-XML
@@ -410,7 +410,7 @@ def XML_PMS2aTV(PMS_address, path, options):
         redirect = aTVroot.find('redirect')
         if redirect==None:
             break;
-        
+            
         # redirect to new PMS-XML - if necessary
         path_rdrct = redirect.get('newPath')
         if path_rdrct:
@@ -423,8 +423,8 @@ def XML_PMS2aTV(PMS_address, path, options):
         if XMLtemplate_rdrct:
             XMLtemplate = XMLtemplate_rdrct.replace(" ", "")
             dprint(__name__, 1, "XMLTemplate redirect: {0}", XMLtemplate)
-
-dprint(__name__, 1, "====== generated aTV-XML ======")
+    
+    dprint(__name__, 1, "====== generated aTV-XML ======")
     dprint(__name__, 1, aTVroot)
     dprint(__name__, 1, "====== aTV-XML finished ======")
     
@@ -489,7 +489,7 @@ def XML_ExpandNode(CommandCollection, elem, child, src, srcXML, text_tail):
         res = False
         if hasattr(CCommandCollection, 'TREE_'+cmd):  # expand tree, work COPY, CUT
             line = line[:cmd_start] + line[cmd_end+2:]  # remove cmd from text and tail
-            if text_tail=='TEXT':
+            if text_tail=='TEXT':  
                 child.text = line
             elif text_tail=='TAIL':
                 child.tail = line
@@ -502,7 +502,7 @@ def XML_ExpandNode(CommandCollection, elem, child, src, srcXML, text_tail):
             
             if res==True:
                 return True  # tree modified, node added/removed: restart from 1st elem
-
+        
         elif hasattr(CCommandCollection, 'ATTRIB_'+cmd):  # check other known cmds: VAL, EVAL...
             dprint(__name__, 2, "XML_ExpandNode - Stumbled over {0} in line {1}", cmd, line)
             pos = cmd_end
@@ -513,7 +513,7 @@ def XML_ExpandNode(CommandCollection, elem, child, src, srcXML, text_tail):
                 child.text = line
             elif text_tail=='TAIL':
                 child.tail = line
-
+    
     dprint(__name__, 2, "XML_ExpandNode: {0} - done", line)
     return False
 
@@ -550,7 +550,7 @@ def XML_ExpandLine(CommandCollection, src, srcXML, line):
         while next_start!=-1 and next_start<cmd_end:
             cmd_end = line.find('}}',cmd_end+2)
             next_start = line.find('{{',next_start+2)
-        
+
         if cmd_start==-1 or cmd_end==-1 or cmd_start>cmd_end:
             break;
         
@@ -580,22 +580,22 @@ def XML_ExpandLine(CommandCollection, src, srcXML, line):
             pos = cmd_end
         else:
             dprint(__name__, 0, "XML_ExpandLine - Found unknown cmd {0} in line {1}", cmd, line)
-            line = line[:cmd_start] + "((UNKNOWN:"+cmd+"))" + line[cmd_end+2:]
+            line = line[:cmd_start] + "((UNKNOWN:"+cmd+"))" + line[cmd_end+2:]    
         
         dprint(__name__, 2, "XML_ExpandLine: {0} - done", line)
-return line
+    return line
 
 
 
 """
-    # Command expander classes
-    # CCommandHelper():
-    #     base class to the following, provides basic parsing & evaluation functions
-    # CCommandCollection():
-    #     cmds to set up sources (ADDXML, VAR)
-    #     cmds with effect on the tree structure (COPY, CUT) - must be expanded first
-    #     cmds dealing with single node keys, text, tail only (VAL, EVAL, ADDR_PMS ,...)
-    """
+# Command expander classes
+# CCommandHelper():
+#     base class to the following, provides basic parsing & evaluation functions
+# CCommandCollection():
+#     cmds to set up sources (ADDXML, VAR)
+#     cmds with effect on the tree structure (COPY, CUT) - must be expanded first
+#     cmds dealing with single node keys, text, tail only (VAL, EVAL, ADDR_PMS ,...)
+"""
 class CCommandHelper():
     def __init__(self, options, PMSroot, PMS_address, path):
         self.options = options
@@ -633,7 +633,7 @@ class CCommandHelper():
         attrib, leftover = self.getParam(src, param)
         default, leftover = self.getParam(src, leftover)
         
-        el, srcXML, attrib = self.getBase(src, srcXML, attrib)
+        el, srcXML, attrib = self.getBase(src, srcXML, attrib)         
         
         # walk the path if neccessary
         while '/' in attrib and el!=None:
@@ -718,7 +718,7 @@ class CCommandHelper():
         return [convlist, leftover]
     
     def applyConversion(self, val, convlist):
-        # apply string conversion
+        # apply string conversion            
         if convlist!=[]:
             for part in reversed(sorted(convlist)):
                 if val>=part[0]:
@@ -861,7 +861,7 @@ class CCommandCollection(CCommandHelper):
         # duplicate child and add to tree
         cnt = 0
         for elemSRC in elemsSRC:
-            self.PMSroot['copy_'+tag] = elemSRC
+                self.PMSroot['copy_'+tag] = elemSRC
                 self.variables['copy_ix'] = str(cnt)
                 cnt = cnt+1
                 el = copy.deepcopy(child)
@@ -872,18 +872,18 @@ class CCommandCollection(CCommandHelper):
                     for el_child in list(el):
                         elem.insert(ix, el_child)
                         ix += 1
-            else:
-                elem.insert(ix, el)
+                else:
+                    elem.insert(ix, el)
                     ix += 1
-
-    # remove template child
-    elem.remove(child)
+        
+        # remove template child
+        elem.remove(child)
         return True  # tree modified, nodes updated: restart from 1st elem
-
-def TREE_PAGEDCOPY(self, elem, child, src, srcXML, param):
     
-    # is MULTICOPY?
-    tags=param.split(',')
+    def TREE_PAGEDCOPY(self, elem, child, src, srcXML, param):
+        
+        # is MULTICOPY?
+        tags=param.split(',')
         tag, param_enbl = self.getParam(src, tags[0])
         src, srcXML, tag = self.getBase(src, srcXML, tag)
         columncount=tags[1]
@@ -897,11 +897,11 @@ def TREE_PAGEDCOPY(self, elem, child, src, srcXML, param):
             parts = tag.split('/',1)
             src = src.find(parts[0])
             tag = parts[1]
-    
-    # find index of child in elem - to keep consistent order
-    for ix, el in enumerate(list(elem)):
-        if el==child:
-            break
+        
+        # find index of child in elem - to keep consistent order
+        for ix, el in enumerate(list(elem)):
+            if el==child:
+                break
         
         #get all requested tags
         itemrange = src.findall(tag)
@@ -916,21 +916,21 @@ def TREE_PAGEDCOPY(self, elem, child, src, srcXML, param):
         
         if len(tags) > 3:
             itemrange = sorted(itemrange, key=lambda x: x.attrib.get('addedAt'), reverse=True)
-
-    for elemSRC in itemrange:
         
-        key = 'COPY'
+        for elemSRC in itemrange:
+            
+            key = 'COPY'
             if param_enbl!='':
                 key, leftover, dfltd = self.getKey(elemSRC, srcXML, param_enbl)
                 conv, leftover = self.getConversion(elemSRC, leftover)
                 if not dfltd:
                     key = self.applyConversion(key, conv)
-
-
-        if key:
             
-            if iconcount == 0:
-                pagecount += 1
+            
+            if key:
+                
+                if iconcount == 0:
+                    pagecount += 1
                     currentgrid = etree.SubElement(elem, "grid")
                     currentgrid.set("id","grid_"+str(pagecount))
                     currentgrid.set("columnCount", columncount )
@@ -941,9 +941,9 @@ def TREE_PAGEDCOPY(self, elem, child, src, srcXML, param):
                     currentgrid.set("id","grid_"+str(pagecount))
                     currentgrid.set("columnCount", columncount )
                     items = etree.SubElement(currentgrid, "items")
-
-
-            el = copy.deepcopy(child)
+                
+                
+                el = copy.deepcopy(child)
                 XML_ExpandTree(self, el, elemSRC, srcXML)
                 XML_ExpandAllAttrib(self, el, elemSRC, srcXML)
                 
@@ -952,10 +952,10 @@ def TREE_PAGEDCOPY(self, elem, child, src, srcXML, param):
                         items.insert(ix, el_child)
                         ix += 1
                         iconcount += 1
-else:
-    items.insert(ix, el)
-        ix += 1
-            iconcount += 1
+                else:
+                    items.insert(ix, el)
+                    ix += 1
+                    iconcount += 1
         
         
         
@@ -1024,7 +1024,7 @@ else:
         container, leftover, dfltd = self.getKey(src, srcXML, param + "/container")
         vCodec, leftover, dfltd = self.getKey(src, srcXML, param + "/videoCodec")
         aCodec, leftover, dfltd = self.getKey(src, srcXML, param + "/audioCodec")
-        channels, leftover, dfltd = self.getKey(src, srcXML, param + "/audioChannels")
+        channels, leftover, dfltd = self.getKey(src, srcXML, param + "/audioChannels")  
         
         additionalBadges = etree.Element("additionalMediaBadges")
         index = 0
@@ -1049,7 +1049,7 @@ else:
             attribs['insertIndex'] = str(index)
             attribs['src'] = g_param['baseURL'] + '/thumbnails/MediaBadges/' + container + '.png'
             urlBadge = etree.SubElement(additionalBadges, "urlBadge", attribs)
-            index += 1
+            index += 1 
         # Video Codec
         if vCodec != '' and self.options['aTVFirmwareVersion'] >= '7.0':
             if vCodec == 'mpeg4':
@@ -1057,13 +1057,13 @@ else:
             attribs['insertIndex'] = str(index)
             attribs['src'] = g_param['baseURL'] + '/thumbnails/MediaBadges/' + vCodec + '.png'
             urlBadge = etree.SubElement(additionalBadges, "urlBadge", attribs)
-            index += 1
+            index += 1    
         # Audio Codec
         if aCodec != '':
             attribs['insertIndex'] = str(index)
             attribs['src'] = g_param['baseURL'] + '/thumbnails/MediaBadges/' + aCodec + '.png'
             urlBadge = etree.SubElement(additionalBadges, "urlBadge", attribs)
-            index += 1
+            index += 1 
         # Audio Channels
         if channels != '':
             attribs['insertIndex'] = str(index)
@@ -1072,8 +1072,8 @@ else:
         # Append XML
         child.append(additionalBadges)
         return True # Tree changed
-
-
+        
+            
     # XML ATTRIB modifier commands
     # add new commands to this list!
     def ATTRIB_VAL(self, src, srcXML, param):
@@ -1085,14 +1085,14 @@ else:
     
     def ATTRIB_EVAL(self, src, srcXML, param):
         return str(eval(param))
-    
+
     def ATTRIB_VAL_QUOTED(self, src, srcXML, param):
         key, leftover, dfltd = self.getKey(src, srcXML, param)
         conv, leftover = self.getConversion(src, leftover)
         if not dfltd:
             key = self.applyConversion(key, conv)
         return quote_plus(unicode(key).encode("utf-8"))
-    
+
     def ATTRIB_SETTING(self, src, srcXML, param):
         opt, leftover = self.getParam(src, param)
         return g_ATVSettings.getSetting(self.ATV_udid, opt)
@@ -1135,30 +1135,30 @@ else:
         dprint(__name__, 2, "photo: ATVNative - {0}", photoATVNative)
         
         if width=='' and \
-            transcoderAction=='Auto' and \
-                photoATVNative:
-                    # direct play
-                    res = PlexAPI.getDirectImagePath(key, AuthToken)
-                        else:
-                            if width=='':
-                                width = 1920  # max for HDTV. Relate to aTV version? Increase for KenBurns effect?
-                                    if height=='':
-                                        height = 1080  # as above
-                                            # request transcoding
-                                            res = PlexAPI.getTranscodeImagePath(key, AuthToken, self.path[srcXML], width, height)
-                                                
-                                                if res.startswith('/'):  # internal full path.
-                                                    res = PMS_baseURL + res
-                                                        elif res.startswith('http://') or key.startswith('https://'):  # external address
-                                                            pass
-                                                                else:  # internal path, add-on
-                                                                    res = PMS_baseURL + self.path[srcXML] + '/' + res
-                                                                        
-                                                                        dprint(__name__, 1, 'ImageURL: {0}', res)
-                                                                            return res
-
-def ATTRIB_MUSICURL(self, src, srcXML, param):
-    Track, leftover = self.getElement(src, srcXML, param)
+           transcoderAction=='Auto' and \
+           photoATVNative:
+            # direct play
+            res = PlexAPI.getDirectImagePath(key, AuthToken)
+        else:
+            if width=='':
+                width = 1920  # max for HDTV. Relate to aTV version? Increase for KenBurns effect?
+            if height=='':
+                height = 1080  # as above
+            # request transcoding
+            res = PlexAPI.getTranscodeImagePath(key, AuthToken, self.path[srcXML], width, height)
+        
+        if res.startswith('/'):  # internal full path.
+            res = PMS_baseURL + res
+        elif res.startswith('http://') or key.startswith('https://'):  # external address
+            pass
+        else:  # internal path, add-on
+            res = PMS_baseURL + self.path[srcXML] + '/' + res
+        
+        dprint(__name__, 1, 'ImageURL: {0}', res)
+        return res
+    
+    def ATTRIB_MUSICURL(self, src, srcXML, param):
+        Track, leftover = self.getElement(src, srcXML, param)
         
         AuthToken = PlexAPI.getPMSProperty(self.ATV_udid, self.PMS_uuid, 'accesstoken')
         
@@ -1169,9 +1169,9 @@ def ATTRIB_MUSICURL(self, src, srcXML, param):
             res = PlexAPI.getURL(self.PMS_baseURL, self.path[srcXML], res)
             dprint(__name__, 1, 'MusicURL - direct: {0}', res)
             return res
-    
-    # complete track structure - request transcoding if needed
-    Media = Track.find('Media')
+        
+        # complete track structure - request transcoding if needed
+        Media = Track.find('Media')
         
         # check "Media" element and get key
         if Media!=None:
@@ -1186,7 +1186,7 @@ def ATTRIB_MUSICURL(self, src, srcXML, param):
             dprint(__name__, 2, "audio: ATVNative - {0}", audioATVNative)
             
             if audioATVNative and\
-                int(Media.get('bitrate','0')) < int(maxAudioBitrate):
+               int(Media.get('bitrate','0')) < int(maxAudioBitrate):
                 # direct play
                 res, leftover, dfltd = self.getKey(Media, srcXML, 'Part/key')
                 res = PlexAPI.getDirectAudioPath(res, AuthToken)
@@ -1194,10 +1194,10 @@ def ATTRIB_MUSICURL(self, src, srcXML, param):
                 # request transcoding
                 res, leftover, dfltd = self.getKey(Track, srcXML, 'key')
                 res = PlexAPI.getTranscodeAudioPath(res, AuthToken, self.options, maxAudioBitrate)
-
-else:
-    dprint(__name__, 0, "MEDIAPATH - element not found: {0}", param)
-        res = 'FILE_NOT_FOUND'  # not found?
+        
+        else:
+            dprint(__name__, 0, "MEDIAPATH - element not found: {0}", param)
+            res = 'FILE_NOT_FOUND'  # not found?
         
         res = PlexAPI.getURL(self.PMS_baseURL, self.path[srcXML], res)
         dprint(__name__, 1, 'MusicURL: {0}', res)
@@ -1225,12 +1225,12 @@ else:
         elif key.startswith('http://') or key.startswith('https://'):  # external server
             res = key
             """
-                parts = urlparse.urlsplit(key)  # (scheme, networklocation, path, ...)
-                key = urlparse.urlunsplit(('', '', parts[2], parts[3], parts[4]))  # keep path only
-                PMS_uuid = PlexAPI.getPMSFromIP(g_param['PMS_list'], parts.hostname)
-                PMSaddress = PlexAPI.getAddress(g_param['PMS_list'], PMS_uuid)  # get PMS address (might be local as well!?!)
-                res = res + '/PMS(' + quote_plus(PMSaddress) + ')' + key
-                """
+            parts = urlparse.urlsplit(key)  # (scheme, networklocation, path, ...)
+            key = urlparse.urlunsplit(('', '', parts[2], parts[3], parts[4]))  # keep path only
+            PMS_uuid = PlexAPI.getPMSFromIP(g_param['PMS_list'], parts.hostname)
+            PMSaddress = PlexAPI.getAddress(g_param['PMS_list'], PMS_uuid)  # get PMS address (might be local as well!?!)
+            res = res + '/PMS(' + quote_plus(PMSaddress) + ')' + key
+            """
         elif key.startswith('/'):  # internal full path.
             res = res + PMS_mark + key
         elif key == '':  # internal path
@@ -1246,11 +1246,11 @@ else:
                 res = res +'?'+ addOpt
             else:
                 res = res +'&'+ addOpt
-
-    return res
-
-def ATTRIB_VIDEOURL(self, src, srcXML, param):
-    Video, leftover = self.getElement(src, srcXML, param)
+        
+        return res
+    
+    def ATTRIB_VIDEOURL(self, src, srcXML, param):
+        Video, leftover = self.getElement(src, srcXML, param)
         partIndex, leftover, dfltd = self.getKey(src, srcXML, leftover)
         partIndex = int(partIndex) if partIndex else 0
         
@@ -1260,9 +1260,9 @@ def ATTRIB_VIDEOURL(self, src, srcXML, param):
             dprint(__name__, 0, "VIDEOURL - VIDEO element not found: {0}", param)
             res = 'VIDEO_ELEMENT_NOT_FOUND'  # not found?
             return res
-    
-    # complete video structure - request transcoding if needed
-    Media = Video.find('Media')
+        
+        # complete video structure - request transcoding if needed
+        Media = Video.find('Media')
         
         # check "Media" element and get key
         if Media!=None:
@@ -1278,22 +1278,22 @@ def ATTRIB_VIDEOURL(self, src, srcXML, param):
                 Media.get('container','-') in ("mov", "mp4") and \
                 Media.get('videoCodec','-') in ("mpeg4", "h264", "drmi") and \
                 Media.get('audioCodec','-') in ("aac", "ac3", "drms")
-        
+            
             for Stream in Media.find('Part').findall('Stream'):
                 if Stream.get('streamType','') == '1' and\
-                    Stream.get('codec','-') in ("mpeg4", "h264"):
+                   Stream.get('codec','-') in ("mpeg4", "h264"):
                     if Stream.get('profile', '-') == 'high 10' or \
                         int(Stream.get('refFrames','0')) > 8:
                             videoATVNative = False
-                break
-
-    dprint(__name__, 2, "video: ATVNative - {0}", videoATVNative)
-        
-        # quality limits: quality=(resolution, quality, bitrate)
-        qLookup = { '480p 2.0Mbps' :('720x480', '60', '2000'), \
-            '720p 3.0Mbps' :('1280x720', '75', '3000'), \
-                '720p 4.0Mbps' :('1280x720', '100', '4000'), \
-                    '1080p 8.0Mbps' :('1920x1080', '60', '8000'), \
+                    break
+            
+            dprint(__name__, 2, "video: ATVNative - {0}", videoATVNative)
+            
+            # quality limits: quality=(resolution, quality, bitrate)
+            qLookup = { '480p 2.0Mbps' :('720x480', '60', '2000'), \
+                        '720p 3.0Mbps' :('1280x720', '75', '3000'), \
+                        '720p 4.0Mbps' :('1280x720', '100', '4000'), \
+                        '1080p 8.0Mbps' :('1920x1080', '60', '8000'), \
                         '1080p 10.0Mbps' :('1920x1080', '75', '10000'), \
                         '1080p 12.0Mbps' :('1920x1080', '90', '12000'), \
                         '1080p 20.0Mbps' :('1920x1080', '100', '20000'), \
@@ -1302,7 +1302,7 @@ def ATTRIB_VIDEOURL(self, src, srcXML, param):
                 qLimits = qLookup[g_ATVSettings.getSetting(self.ATV_udid, 'transcodequality')]
             else:
                 qLimits = qLookup[g_ATVSettings.getSetting(self.ATV_udid, 'remotebitrate')]
-        
+            
             # subtitle renderer, subtitle selection
             subtitleRenderer = g_ATVSettings.getSetting(self.ATV_udid, 'subtitlerenderer')
             
@@ -1311,7 +1311,7 @@ def ATTRIB_VIDEOURL(self, src, srcXML, param):
             subtitleFormat = ''
             for Stream in Media.find('Part').findall('Stream'):  # Todo: check 'Part' existance, deal with multi part video
                 if Stream.get('streamType','') == '3' and\
-                    Stream.get('selected','0') == '1':
+                   Stream.get('selected','0') == '1':
                     subtitleId = Stream.get('id','')
                     subtitleKey = Stream.get('key','')
                     subtitleFormat = Stream.get('format','')
@@ -1319,15 +1319,15 @@ def ATTRIB_VIDEOURL(self, src, srcXML, param):
             
             subtitleIOSNative = \
                 subtitleKey=='' and subtitleFormat=="tx3g"  # embedded
-subtitlePlexConnect = \
-    subtitleKey!='' and subtitleFormat=="srt"  # external
-        
-        # subtitle suitable for direct play?
-        #    no subtitle
-        # or 'Auto'    with subtitle by iOS or PlexConnect
-        # or 'iOS,PMS' with subtitle by iOS
-        subtitleDirectPlay = \
-            subtitleId=='' \
+            subtitlePlexConnect = \
+                subtitleKey!='' and subtitleFormat=="srt"  # external
+            
+            # subtitle suitable for direct play?
+            #    no subtitle
+            # or 'Auto'    with subtitle by iOS or PlexConnect
+            # or 'iOS,PMS' with subtitle by iOS
+            subtitleDirectPlay = \
+                subtitleId=='' \
                 or \
                 subtitleRenderer=='Auto' and \
                 ( (videoATVNative and subtitleIOSNative) or subtitlePlexConnect ) \
@@ -1338,50 +1338,50 @@ subtitlePlexConnect = \
             
             # determine video URL
             if transcoderAction=='DirectPlay' \
-                or \
-                    transcoderAction=='Auto' and \
-                        videoATVNative and \
-                            int(Media.get('bitrate','0')) < int(qLimits[2]) and \
-                                subtitleDirectPlay:
-                                    # direct play for...
-                                    #    force direct play
-                                    # or videoATVNative (HTTP live stream m4v/h264/aac...)
-                                    #    limited by quality setting
-                                    #    with aTV supported subtitle (iOS embedded tx3g, PlexConnext external srt)
-                                    res, leftover, dfltd = self.getKey(Media, srcXML, 'Part['+str(partIndex+1)+']/key')
-                                        
-                                        if Media.get('indirect', False):  # indirect... todo: select suitable resolution, today we just take first Media
-                                            PMS = PlexAPI.getXMLFromPMS(self.PMS_baseURL, res, self.options, AuthToken)  # todo... check key for trailing '/' or even 'http'
-                                                res, leftover, dfltd = self.getKey(PMS.getroot(), srcXML, 'Video/Media/Part['+str(partIndex+1)+']/key')
-                                                    
-                                                    res = PlexAPI.getDirectVideoPath(res, AuthToken)
-                                                        else:
-                                                            # request transcoding
-                                                            res = Video.get('key','')
-                                                                
-                                                                # misc settings: subtitlesize, audioboost
-                                                                subtitle = { 'selected': '1' if subtitleId else '0', \
-                                                                    'dontBurnIn': '1' if subtitleDirectPlay else '0', \
-                                                                        'size': g_ATVSettings.getSetting(self.ATV_udid, 'subtitlesize') }
-                                                                            audio = { 'boost': g_ATVSettings.getSetting(self.ATV_udid, 'audioboost') }
-                                                                                res = PlexAPI.getTranscodeVideoPath(res, AuthToken, self.options, transcoderAction, qLimits, subtitle, audio, partIndex)
-                                                                            
-                                                                            else:
-                                                                                dprint(__name__, 0, "VIDEOURL - MEDIA element not found: {0}", param)
-                                                                                    res = 'MEDIA_ELEMENT_NOT_FOUND'  # not found?
-                                                                                        
-                                                                                        if res.startswith('/'):  # internal full path.
-                                                                                            res = self.PMS_baseURL + res
-                                                                                                elif res.startswith('http://') or res.startswith('https://'):  # external address
-                                                                                                    pass
-                                                                                                        else:  # internal path, add-on
-                                                                                                            res = self.PMS_baseURL + self.path[srcXML] + res
-                                                                                                                
-                                                                                                                dprint(__name__, 1, 'VideoURL: {0}', res)
-                                                                                                                    return res
-
-def ATTRIB_episodestring(self, src, srcXML, param):
-    parentIndex, leftover, dfltd = self.getKey(src, srcXML, param)  # getKey "defaults" if nothing found.
+               or \
+               transcoderAction=='Auto' and \
+               videoATVNative and \
+               int(Media.get('bitrate','0')) < int(qLimits[2]) and \
+               subtitleDirectPlay:
+                # direct play for...
+                #    force direct play
+                # or videoATVNative (HTTP live stream m4v/h264/aac...)
+                #    limited by quality setting
+                #    with aTV supported subtitle (iOS embedded tx3g, PlexConnext external srt)
+                res, leftover, dfltd = self.getKey(Media, srcXML, 'Part['+str(partIndex+1)+']/key')
+                
+                if Media.get('indirect', False):  # indirect... todo: select suitable resolution, today we just take first Media
+                    PMS = PlexAPI.getXMLFromPMS(self.PMS_baseURL, res, self.options, AuthToken)  # todo... check key for trailing '/' or even 'http'
+                    res, leftover, dfltd = self.getKey(PMS.getroot(), srcXML, 'Video/Media/Part['+str(partIndex+1)+']/key')
+                
+                res = PlexAPI.getDirectVideoPath(res, AuthToken)
+            else:
+                # request transcoding
+                res = Video.get('key','')
+                
+                # misc settings: subtitlesize, audioboost
+                subtitle = { 'selected': '1' if subtitleId else '0', \
+                             'dontBurnIn': '1' if subtitleDirectPlay else '0', \
+                             'size': g_ATVSettings.getSetting(self.ATV_udid, 'subtitlesize') }
+                audio = { 'boost': g_ATVSettings.getSetting(self.ATV_udid, 'audioboost') }
+                res = PlexAPI.getTranscodeVideoPath(res, AuthToken, self.options, transcoderAction, qLimits, subtitle, audio, partIndex)
+        
+        else:
+            dprint(__name__, 0, "VIDEOURL - MEDIA element not found: {0}", param)
+            res = 'MEDIA_ELEMENT_NOT_FOUND'  # not found?
+        
+        if res.startswith('/'):  # internal full path.
+            res = self.PMS_baseURL + res
+        elif res.startswith('http://') or res.startswith('https://'):  # external address
+            pass
+        else:  # internal path, add-on
+            res = self.PMS_baseURL + self.path[srcXML] + res
+        
+        dprint(__name__, 1, 'VideoURL: {0}', res)
+        return res
+    
+    def ATTRIB_episodestring(self, src, srcXML, param):
+        parentIndex, leftover, dfltd = self.getKey(src, srcXML, param)  # getKey "defaults" if nothing found.
         index, leftover, dfltd = self.getKey(src, srcXML, leftover)
         title, leftover, dfltd = self.getKey(src, srcXML, leftover)
         out = self._("{0:0d}x{1:02d} {2}").format(int(parentIndex), int(index), title)
@@ -1409,17 +1409,17 @@ def ATTRIB_episodestring(self, src, srcXML, param):
                 return self._("{0:d}:{1:0>2d}").format(mins, secs)
         
         return ""
-
-def ATTRIB_contentRating(self, src, srcXML, param):
-    rating, leftover, dfltd = self.getKey(src, srcXML, param)
+        
+    def ATTRIB_contentRating(self, src, srcXML, param):
+        rating, leftover, dfltd = self.getKey(src, srcXML, param)
         if rating.find('/') != -1:
             parts = rating.split('/')
             return parts[1]
-    else:
-        return rating
-
-def ATTRIB_unwatchedCountGrid(self, src, srcXML, param):
-    total, leftover, dfltd = self.getKey(src, srcXML, param)
+        else:
+            return rating
+        
+    def ATTRIB_unwatchedCountGrid(self, src, srcXML, param):
+        total, leftover, dfltd = self.getKey(src, srcXML, param)
         viewed, leftover, dfltd = self.getKey(src, srcXML, leftover)
         unwatched = int(total) - int(viewed)
         return str(unwatched)
@@ -1451,13 +1451,13 @@ def ATTRIB_unwatchedCountGrid(self, src, srcXML, param):
             res = sys.path[0]+'/assets/fanart/bg.jpg'
         dprint(__name__, 1, 'serving: {0}', res+".png")  # Debug
         return res
-    
+
     def ATTRIB_getBackground(self, src, srcXML, param):
         import PILBackgrounds
         conf = PILBackgrounds.ImageBackground(eval(param))
         res = conf.generate()
         return res
-    
+
     def ATTRIB_BACKGROUNDURL(self, src, srcXML, param):
         key, leftover, dfltd = self.getKey(src, srcXML, param)
         gradientTemplate, leftover = self.getParam(src, leftover)
@@ -1474,8 +1474,8 @@ def ATTRIB_unwatchedCountGrid(self, src, srcXML, param):
         blurStart, leftover = self.getParam(src, leftover)
         blurEnd, leftover = self.getParam(src, leftover)
         statusText, leftover = self.getParam(src, leftover)
-        
-        
+
+
         if key.startswith('/'):  # internal full path.
             key = self.PMS_baseURL + key
         elif key.startswith('http://') or key.startswith('https://'):  # external address
@@ -1491,7 +1491,7 @@ def ATTRIB_unwatchedCountGrid(self, src, srcXML, param):
         res = res + PILBackgrounds.generate(self.PMS_uuid, key, auth_token, self.options['aTVScreenResolution'], g_ATVSettings.getSetting(self.ATV_udid, 'fanart_blur'), gradientTemplate, titleText, subtitleText, titleSize, subtitleSize, textColor, align, valign, offsetx, offsety, lineheight, blurStart, blurEnd, statusText)
         dprint(__name__, 0, "Background: {0}", res)
         return res
-    
+
     def ATTRIB_FanartCOUNT(self, src, srcXML, param):
         isfile = os.path.isfile
         join = os.path.join
@@ -1514,9 +1514,9 @@ if __name__=="__main__":
     
     print "load PMS XML"
     _XML = '<PMS number="1" string="Hello"> \
-    <DATA number="42" string="World"></DATA> \
-    <DATA string="Sun"></DATA> \
-    </PMS>'
+                <DATA number="42" string="World"></DATA> \
+                <DATA string="Sun"></DATA> \
+            </PMS>'
     PMSroot = etree.fromstring(_XML)
     PMSTree = etree.ElementTree(PMSroot)
     print prettyXML(PMSroot)
@@ -1524,18 +1524,18 @@ if __name__=="__main__":
     print
     print "load aTV XML template"
     _XML = '<aTV> \
-    <INFO num="{{VAL(number)}}" str="{{VAL(string)}}">Info</INFO> \
-    <FILE str="{{VAL(string)}}" strconv="{{VAL(string::World=big|Moon=small|Sun=huge)}}" num="{{VAL(number:5)}}" numfunc="{{EVAL(int({{VAL(number:5)}}/10))}}"> \
-    File{{COPY(DATA)}} \
-    </FILE> \
-    <PATH path="{{ADDPATH(file:unknown)}}" /> \
-    <accessories> \
-    <cut />{{CUT(number::0=cut|1=)}} \
-    <dontcut />{{CUT(attribnotfound)}} \
-    </accessories> \
-    <ADDPATH>{{ADDPATH(string)}}</ADDPATH> \
-    <COPY2>={{COPY(DATA)}}=</COPY2> \
-    </aTV>'
+                <INFO num="{{VAL(number)}}" str="{{VAL(string)}}">Info</INFO> \
+                <FILE str="{{VAL(string)}}" strconv="{{VAL(string::World=big|Moon=small|Sun=huge)}}" num="{{VAL(number:5)}}" numfunc="{{EVAL(int({{VAL(number:5)}}/10))}}"> \
+                    File{{COPY(DATA)}} \
+                </FILE> \
+                <PATH path="{{ADDPATH(file:unknown)}}" /> \
+                <accessories> \
+                    <cut />{{CUT(number::0=cut|1=)}} \
+                    <dontcut />{{CUT(attribnotfound)}} \
+                </accessories> \
+                <ADDPATH>{{ADDPATH(string)}}</ADDPATH> \
+                <COPY2>={{COPY(DATA)}}=</COPY2> \
+            </aTV>'
     aTVroot = etree.fromstring(_XML)
     aTVTree = etree.ElementTree(aTVroot)
     print prettyXML(aTVroot)

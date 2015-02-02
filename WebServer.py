@@ -1,16 +1,16 @@
 #!/usr/bin/env python
 
 """
-    Sources:
-    http://fragments.turtlemeat.com/pythonwebserver.php
-    http://www.linuxjournal.com/content/tech-tip-really-simple-http-server-python
-    ...stackoverflow.com and such
-    
-    after 27Aug - Apple's switch to https:
-    - added https WebServer with SSL encryption - needs valid (private) vertificate on aTV and server
-    - for additional information see http://langui.sh/2013/08/27/appletv-ssl-plexconnect/
-    Thanks to reaperhulk for showing this solution!
-    """
+Sources:
+http://fragments.turtlemeat.com/pythonwebserver.php
+http://www.linuxjournal.com/content/tech-tip-really-simple-http-server-python
+...stackoverflow.com and such
+
+after 27Aug - Apple's switch to https:
+- added https WebServer with SSL encryption - needs valid (private) vertificate on aTV and server
+- for additional information see http://langui.sh/2013/08/27/appletv-ssl-plexconnect/
+Thanks to reaperhulk for showing this solution!
+"""
 
 
 import sys
@@ -59,15 +59,15 @@ class MyHandler(BaseHTTPRequestHandler):
     
     # Fixes slow serving speed under Windows
     def address_string(self):
-        host, port = self.client_address[:2]
-            #return socket.getfqdn(host)
-            return host
-        
-        def log_message(self, format, *args):
-            pass
-
-def compress(self, data):
-    buf = StringIO.StringIO()
+      host, port = self.client_address[:2]
+      #return socket.getfqdn(host)
+      return host
+      
+    def log_message(self, format, *args):
+      pass
+    
+    def compress(self, data):
+        buf = StringIO.StringIO()
         zfile = gzip.GzipFile(mode='wb',  fileobj=buf, compresslevel=9)
         zfile.write(data)
         zfile.close()
@@ -82,17 +82,17 @@ def compress(self, data):
         except KeyError:
             accept_encoding = []
         if enableGzip and \
-            g_param['CSettings'].getSetting('allow_gzip_atv')=='True' and \
-                'gzip' in accept_encoding:
-                    self.send_header('Content-encoding', 'gzip')
-                        self.end_headers()
-                            self.wfile.write(self.compress(data))
-                                else:
-                                    self.end_headers()
-                                        self.wfile.write(data)
-
-def do_GET(self):
-    global g_param
+           g_param['CSettings'].getSetting('allow_gzip_atv')=='True' and \
+           'gzip' in accept_encoding:
+            self.send_header('Content-encoding', 'gzip')
+            self.end_headers()
+            self.wfile.write(self.compress(data))
+        else:
+            self.end_headers()
+            self.wfile.write(data)
+    
+    def do_GET(self):
+        global g_param
         try:
             dprint(__name__, 2, "http request header:\n{0}", self.headers)
             dprint(__name__, 2, "http request path:\n{0}", self.path)
@@ -141,7 +141,7 @@ def do_GET(self):
                 options['aTVAddress'] = self.headers['X-Forwarded-For'].split(',', 1)[0]
             else:
                 options['aTVAddress'] = self.client_address[0]
-        
+            
             # get aTV hard-/software parameters
             options['aTVFirmwareVersion'] = self.headers.get('X-Apple-TV-Version', '5.1')
             options['aTVScreenResolution'] = self.headers.get('X-Apple-TV-Resolution', '720')
@@ -152,7 +152,7 @@ def do_GET(self):
             dprint(__name__, 2, "additional arguments:\n{0}", query)
             
             if 'User-Agent' in self.headers and \
-                'AppleTV' in self.headers['User-Agent']:
+               'AppleTV' in self.headers['User-Agent']:
                 
                 # recieve simple logging messages from the ATV
                 if 'PlexConnectATVLogLevel' in options:
@@ -161,28 +161,28 @@ def do_GET(self):
                     self.send_header('Content-type', 'text/plain')
                     self.end_headers()
                     return
-            
-            # serve "*.cer" - Serve up certificate file to atv
-            if self.path.endswith(".cer"):
-                dprint(__name__, 1, "serving *.cer: "+self.path)
+                    
+                # serve "*.cer" - Serve up certificate file to atv
+                if self.path.endswith(".cer"):
+                    dprint(__name__, 1, "serving *.cer: "+self.path)
                     if g_param['CSettings'].getSetting('certfile').startswith('.'):
                         # relative to current path
                         cfg_certfile = sys.path[0] + sep + g_param['CSettings'].getSetting('certfile')
-                else:
-                    # absolute path
-                    cfg_certfile = g_param['CSettings'].getSetting('certfile')
+                    else:
+                        # absolute path
+                        cfg_certfile = g_param['CSettings'].getSetting('certfile')
                     cfg_certfile = path.normpath(cfg_certfile)
                     
                     cfg_certfile = path.splitext(cfg_certfile)[0] + '.cer'
                     try:
                         f = open(cfg_certfile, "rb")
-                except:
-                    dprint(__name__, 0, "Failed to access certificate: {0}", cfg_certfile)
+                    except:
+                        dprint(__name__, 0, "Failed to access certificate: {0}", cfg_certfile)
                         return
                     
                     self.sendResponse(f.read(), 'text/xml', False)
                     f.close()
-                    return
+                    return 
                 
                 # serve .js files to aTV
                 # application, main: ignore path, send /assets/js/application.js
@@ -190,14 +190,14 @@ def do_GET(self):
                 dirname = path.dirname(self.path)
                 basename = path.basename(self.path)
                 if basename in ("application.js", "main.js", "javascript-packed.js", "bootstrap.js") or \
-                    basename.endswith(".js") and dirname == '/js':
+                   basename.endswith(".js") and dirname == '/js':
                     if basename in ("main.js", "javascript-packed.js", "bootstrap.js"):
                         basename = "application.js"
-                dprint(__name__, 1, "serving /js/{0}", basename)
+                    dprint(__name__, 1, "serving /js/{0}", basename)
                     JS = JSConverter(basename, options)
                     self.sendResponse(JS, 'text/javascript', True)
                     return
-
+                
                 # serve "*.jpg" - thumbnails for old-style mainpage
                 if self.path.endswith(".jpg"):
                     dprint(__name__, 1, "serving *.jpg: "+self.path)
@@ -205,7 +205,7 @@ def do_GET(self):
                     self.sendResponse(f.read(), 'image/jpeg', False)
                     f.close()
                     return
-
+                
                 # serve "*.png" - only png's support transparent colors
                 if self.path.endswith(".png"):
                     dprint(__name__, 1, "serving *.png: "+self.path)
@@ -213,13 +213,13 @@ def do_GET(self):
                     self.sendResponse(f.read(), 'image/png', False)
                     f.close()
                     return
-
-# serve subtitle file - transcoded to aTV subtitle json
-if 'PlexConnect' in options and \
-    options['PlexConnect']=='Subtitle':
-        dprint(__name__, 1, "serving subtitle: "+self.path)
-            XML = Subtitle.getSubtitleJSON(PMSaddress, self.path + query, options)
-                self.sendResponse(XML, 'application/json', True)
+                
+                # serve subtitle file - transcoded to aTV subtitle json
+                if 'PlexConnect' in options and \
+                   options['PlexConnect']=='Subtitle':
+                    dprint(__name__, 1, "serving subtitle: "+self.path)
+                    XML = Subtitle.getSubtitleJSON(PMSaddress, self.path + query, options)
+                    self.sendResponse(XML, 'application/json', True)
                     return
                 
                 # get everything else from XMLConverter - formerly limited to trailing "/" and &PlexConnect Cmds
@@ -228,16 +228,16 @@ if 'PlexConnect' in options and \
                     XML = XMLConverter.XML_PMS2aTV(PMSaddress, self.path + query, options)
                     self.sendResponse(XML, 'text/xml', True)
                     return
-        
-            """
+                
+                """
                 # unexpected request
                 self.send_error(403,"Access denied: %s" % self.path)
                 """
             
             else:
                 self.send_error(403,"Not Serving Client %s" % self.client_address[0])
-except IOError:
-    self.send_error(404,"File Not Found: %s" % self.path)
+        except IOError:
+            self.send_error(404,"File Not Found: %s" % self.path)
 
 
 

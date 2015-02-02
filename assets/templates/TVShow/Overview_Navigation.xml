@@ -26,7 +26,7 @@
               <title>{{TEXT(On Deck)}}</title>
           </collectionDivider>{{CUT(@OnDeck/size:CUT:0=CUT|1=)}}
           
-     <shelf id="shelf_0" columnCount="7">
+          <shelf id="shelf_0" columnCount="7">
               {{CUT(@OnDeck/size:CUT:0=CUT|1=)}}
               <sections>
                   <shelfSection>
@@ -36,7 +36,7 @@
                             onSelect="atv.loadURL('{{URL(key:::includeExtras=1&amp;PlexConnect=TVShow_PrePlay)}}')"
                                   onHoldSelect="scrobbleMenu('{{URL(key:::PlexConnect=Scrobble_MenuTVOnDeck)}}')">
                               {{COPY(@OnDeck/Video)}}
-                              {{VAR(items:NoKey:TRUE)}}
+                              {{VAR(items:NoKey:TRUE)}}  <!--within COPY this sets the var to TRUE-->
                               <title>{{VAL(title)}}</title>
                               <subtitle>{{episodestring(parentIndex:0:index:0)}}</subtitle>
                               <image>{{IMAGEURL(grandparentThumb::384)}}</image>

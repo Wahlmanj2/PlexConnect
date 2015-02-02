@@ -32,7 +32,7 @@
               <title>{{TEXT(Recently Added)}}</title>
           </collectionDivider>{{CUT(@recentlyAdded/size:CUT:0=CUT|1=)}}
           
-        <shelf id="shelf_0" columnCount="7">
+          <shelf id="shelf_0" columnCount="7">
               {{CUT(@recentlyAdded/size:CUT:0=CUT|1=)}}
               <sections>
                   <shelfSection>
@@ -42,7 +42,7 @@
                                   onSelect="atv.loadURL('{{URL(key:::includeExtras=1&amp;PlexConnect=Movie_PrePlay)}}')"
                                   onHoldSelect="scrobbleMenu('{{URL(key:::PlexConnect=Scrobble_MenuVideo)}}')">
                               {{COPY(@recentlyAdded/Video)}}
-                              {{VAR(items:NoKey:TRUE)}} 
+                              {{VAR(items:NoKey:TRUE)}}  <!--within COPY this sets the var to TRUE-->
                               <title>{{VAL(title)}}</title>
                               <subtitle>{{VAL(year:&#x00AD;)}}</subtitle>
                               <image>{{IMAGEURL(thumb::384)}}</image>
@@ -64,7 +64,7 @@
                       onSelect="atv.loadURL('{{URL(key:::includeExtras=1&amp;PlexConnect=Movie_PrePlay)}}')"
                       onHoldSelect="scrobbleMenu('{{URL(key:::PlexConnect=Scrobble_MenuVideo)}}')">
                       {{COPY(Video)}}
-                      <title>{{VAL(title)}}</title>
+                      <title>{{VAL(title)}} ({{VAL(year:&#x00AD;)}})</title>
                       <image>{{IMAGEURL(thumb::768)}}</image>
                       <defaultImage>resource://Poster.png</defaultImage>
                   </goldenPoster>

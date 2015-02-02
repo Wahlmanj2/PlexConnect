@@ -1,71 +1,71 @@
 <atv>
-    <head>
-        <script src="{{URL(:/js/utils.js)}}" />
-    </head>
-    
-    <body>
-        {{ADDXML(recentlyAdded::/library/sections/{{VAL(librarySectionID)}}/recentlyAdded?X-Plex-Container-Start=0&amp;X-Plex-Container-Size=20)}}
-        {{VAR(items:NoKey:FALSE)}}
-        
-        <scroller id="Movie_Pagedview">
-            <header>
-                <imageHeader>
-                    <image insets="0, 0, {{VAL(^aTVScreenResolution:1:720=413|1080=635)}}, 0" required="true">
-                        <!--{{URL(:/fanartcache/{{getBackground({{EVAL({\
-                         'template'    : 'plex',\
-                         'title'       : "{{EVAL(quote_plus("{{VAL(title1)}}"))}}",\
-                         'subtitle'    : "{{EVAL(quote_plus("{{VAL(@recentlyAdded/Video/title)}} / {{VAL(Video/year)}}"))}} ",\
-                         'image'       : "{{IMAGEURL(@recentlyAdded/Video/art:)}}",\
-                         'resolution'  : "{{VAL(^aTVScreenResolution)}}",\
-                         'font'        : "fonts/OpenSans/OpenSans-Light.ttf",\
-                         'titleColor'  : "{{VAL($titlecolor::White=fafafa|Grey=878787|Plex Orange=ff8800|Apple Blue=1357d4)}}",\
-                         'subtitleColor': "{{VAL($subtitlecolor::White=fafafa|Grey=878787|Plex Orange=ff8800|Apple Blue=1357d4)}}",\
-                         'imageBlur'   : "{{VAL($fanartblur::1=1|2=2|3=3|0=)}}",\
-                         'layers'      : ["PlexSubGrid{{VAL($fanarttint::On=Text|Off=)}}"]\
-                         })}})}})}}-->
-                        {{BACKGROUNDURL(@recentlyAdded/Video/art::Overview:{{EVAL(quote_plus("{{VAL(@recentlyAdded/Video/title)}}"))}}:{{VAL(Video/year)}}:35:20:FFFFFF:left:bottom:70:485:-50:56:100:{{EVAL(quote_plus("{{VAL(title1)}}"))}})}}
-                    </image>
-                </imageHeader>
-            </header>
-            <items>
-                <collectionDivider alignment="left" accessibilityLabel="Recently Added">
-                    <title>{{TEXT(Recently Added)}}</title>
-                </collectionDivider>{{CUT(@recentlyAdded/size:CUT:0=CUT|1=)}}
-                
-                <pagedGrid id="paged-grid-0">
-                    {{CUT(@recentlyAdded/size:CUT:0=CUT|1=)}}
-                    <fourByThreePoster id="{{VAL(key)}}" featured="true" accessibilityLabel="{{VAL(title)}}" alwaysShowTitles="{{VAL($showtitles_library::Highlighted Only=false|Show All=true)}}"
-                        onPlay="atv.loadURL('{{URL(key:::PlexConnect=Play_Video_Pause&amp;PlexConnectRatingKey={{VAL(ratingKey)}})}}')"
-                        onSelect="atv.loadURL('{{URL(key:::includeExtras=1&amp;PlexConnect={{VAL(type::movie=Movie_|episode=Episode_)}}PrePlay)}}')"
-                        onHoldSelect="scrobbleMenu('{{URL(key:::PlexConnect=Scrobble_MenuVideo)}}')">
-                        {{PAGEDCOPY(@recentlyAdded/Video,6,1)}}
-                        {{VAR(items:NoKey:TRUE)}}
-                        <title>{{VAL(title)}}</title>
-                        <subtitle>{{VAL(year:&#x00AD;)}}</subtitle>
-                        <image>{{IMAGEURL(thumb::384)}}</image>
-                        <defaultImage>resource://Poster.png</defaultImage>
-                    </fourByThreePoster>
-                </pagedGrid>
-                
-                <collectionDivider alignment="left" accessibilityLabel="Movies">
-                    <title></title>
-                </collectionDivider>
-                
-                <grid columnCount="5" id="grid_0">
-                    <items>
-                        <goldenPoster id="{{VAL(key)}}" alwaysShowTitles="{{VAL($showtitles_movies::Highlighted Only=false|Show All=true)}}"
-                            onPlay="atv.loadURL('{{URL(key:::PlexConnect=Play_Video&amp;PlexConnectRatingKey={{VAL(ratingKey)}})}}')"
-                            onSelect="atv.loadURL('{{URL(key:::includeExtras=1&amp;PlexConnect=Movie_PrePlay)}}')"
-                            onHoldSelect="scrobbleMenu('{{URL(key:::PlexConnect=Scrobble_MenuVideo)}}')">
-                            {{COPY(Video)}}
-                            <title>{{VAL(title)}}</title>
-                            <image>{{IMAGEURL(thumb::768)}}</image>
-                            <defaultImage>resource://Poster.png</defaultImage>
-                        </goldenPoster>
-                    </items>
-                </grid>
-                
-            </items>
-        </scroller>
-    </body>
+  <head>
+    <script src="{{URL(:/js/utils.js)}}" />
+  </head>
+
+  <body>
+      {{ADDXML(recentlyAdded::/library/sections/{{VAL(librarySectionID)}}/recentlyAdded?X-Plex-Container-Start=0&amp;X-Plex-Container-Size=20)}}
+      {{VAR(items:NoKey:FALSE)}}
+      
+    <scroller id="Movie_Pagedview">
+      <header>
+          <imageHeader>
+              <image insets="0, 0, {{VAL(^aTVScreenResolution:1:720=413|1080=635)}}, 0" required="true">
+	      <!--{{URL(:/fanartcache/{{getBackground({{EVAL({\
+              'template'    : 'plex',\
+              'title'       : "{{EVAL(quote_plus("{{VAL(title1)}}"))}}",\
+              'subtitle'    : "{{EVAL(quote_plus("{{VAL(@recentlyAdded/Video/title)}} / {{VAL(Video/year)}}"))}} ",\
+              'image'       : "{{IMAGEURL(@recentlyAdded/Video/art:)}}",\
+              'resolution'  : "{{VAL(^aTVScreenResolution)}}",\
+              'font'        : "fonts/OpenSans/OpenSans-Light.ttf",\
+              'titleColor'  : "{{VAL($titlecolor::White=fafafa|Grey=878787|Plex Orange=ff8800|Apple Blue=1357d4)}}",\
+              'subtitleColor': "{{VAL($subtitlecolor::White=fafafa|Grey=878787|Plex Orange=ff8800|Apple Blue=1357d4)}}",\
+              'imageBlur'   : "{{VAL($fanartblur::1=1|2=2|3=3|0=)}}",\
+              'layers'      : ["PlexSubGrid{{VAL($fanarttint::On=Text|Off=)}}"]\
+              })}})}})}}-->
+              {{BACKGROUNDURL(@recentlyAdded/Video/art::Overview:{{EVAL(quote_plus("{{VAL(@recentlyAdded/Video/title)}}"))}}:{{VAL(Video/year)}}:35:20:FFFFFF:left:bottom:70:485:-50:56:100:{{EVAL(quote_plus("{{VAL(title1)}}"))}})}}
+	    </image>
+          </imageHeader>
+      </header>
+      <items>
+          <collectionDivider alignment="left" accessibilityLabel="Recently Added">
+              <title>{{TEXT(Recently Added)}}</title>
+          </collectionDivider>{{CUT(@recentlyAdded/size:CUT:0=CUT|1=)}}
+          
+          <pagedGrid id="paged-grid-0">
+              {{CUT(@recentlyAdded/size:CUT:0=CUT|1=)}}
+              <fourByThreePoster id="{{VAL(key)}}" featured="true" accessibilityLabel="{{VAL(title)}}" alwaysShowTitles="{{VAL($showtitles_library::Highlighted Only=false|Show All=true)}}"
+                  onPlay="atv.loadURL('{{URL(key:::PlexConnect=Play_Video_Pause&amp;PlexConnectRatingKey={{VAL(ratingKey)}})}}')"
+                  onSelect="atv.loadURL('{{URL(key:::includeExtras=1&amp;PlexConnect={{VAL(type::movie=Movie_|episode=Episode_)}}PrePlay)}}')"
+                  onHoldSelect="scrobbleMenu('{{URL(key:::PlexConnect=Scrobble_MenuVideo)}}')">
+                  {{PAGEDCOPY(@recentlyAdded/Video,6,1)}}
+                  {{VAR(items:NoKey:TRUE)}}
+                  <title>{{VAL(title)}}</title>
+                  <subtitle>{{VAL(year:&#x00AD;)}}</subtitle>
+                  <image>{{IMAGEURL(thumb::384)}}</image>
+                  <defaultImage>resource://Poster.png</defaultImage>
+              </fourByThreePoster>
+          </pagedGrid>
+          
+          <collectionDivider alignment="left" accessibilityLabel="Movies">
+              <title></title>
+          </collectionDivider>
+          
+          <grid columnCount="5" id="grid_0">
+              <items>
+                  <goldenPoster id="{{VAL(key)}}" alwaysShowTitles="{{VAL($showtitles_movies::Highlighted Only=false|Show All=true)}}"
+                      onPlay="atv.loadURL('{{URL(key:::PlexConnect=Play_Video&amp;PlexConnectRatingKey={{VAL(ratingKey)}})}}')"
+                      onSelect="atv.loadURL('{{URL(key:::includeExtras=1&amp;PlexConnect=Movie_PrePlay)}}')"
+                      onHoldSelect="scrobbleMenu('{{URL(key:::PlexConnect=Scrobble_MenuVideo)}}')">
+                      {{COPY(Video)}}
+                      <title>{{VAL(title)}}</title>
+                      <image>{{IMAGEURL(thumb::768)}}</image>
+                      <defaultImage>resource://Poster.png</defaultImage>
+                  </goldenPoster>
+              </items>
+          </grid>
+
+      </items>
+    </scroller>
+  </body>
 </atv>

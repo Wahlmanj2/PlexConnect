@@ -14,22 +14,16 @@ options = { \
     'libraryview'               :('Grid', 'Paged Grid', 'Overview', 'Overview Paged', 'List', 'Hide'), \
     'sharedlibrariesview'       :('Grid', 'Paged Grid', 'Overview', 'Overview Paged', 'List', 'Hide'), \
     'librariesview'             :('Hide', 'Grid', 'Paged Grid', 'Overview', 'Overview Paged', 'List'), \
-    'channelview'               :('List', 'Grid', 'Tabbed List', 'Hide'), \
-    'sectionsposition'           :('Top', 'Flow'), \
+    'channelview'               :('Grid', 'List', 'Tabbed List', 'Hide'), \
+    'sectionsposition'           :('Flow', 'Top'), \
     'movieview'                  :('Big Artwork', 'Grid', 'List', 'Detailed List'), \
     'homevideoview'              :('Grid', 'List', 'Detailed List'), \
     'showview'                   :('Big Artwork', 'Grid', 'List', 'Bookcase'), \
     'movie_extras'               :('Show', 'Hide'), \
     'fanart_blur'                :('0', '5', '10', '15', '20'), \
-    'movielayers'                :('Show', 'Hide'), \
-    'showlayers'                 :('Show', 'Hide'), \
-    'seasonlayers'               :('Show', 'Hide'), \
-    'episodelayers'              :('Show', 'Hide'), \
-    'episodeposters'             :('Show', 'Hide'), \
-    'movieposters'               :('Show', 'Hide'), \
     'moviepreplay_bottomshelf'   :('Extras', 'Related Movies'), \
     'episodeview'                :('List', 'Grid'), \
-    'seasonview'                 :('Big Artwork', 'Coverflow', 'List'), \
+    'seasonview'                 :('Coverflow', 'Big Artwork', 'List'), \
     'sectionicons'               :('Fanart', 'Plex', 'Custom'), \
     'sectionicons_shared'        :('Fanart', 'Plex'), \
     'sectionicons_all'           :('Fanart', 'Plex'), \
@@ -41,7 +35,7 @@ options = { \
     'showtitles_library'         :('Show All', 'Highlighted Only'), \
     'starttab'                   :('Library', 'Shared Libraries', 'Channels'), \
     'actorview'                  :('Movies', 'Portrait'), \
-    'flattenseason'              :('True', 'False'), \
+    'flattenseason'              :('False', 'True'), \
     'durationformat'             :('Hours/Minutes', 'Minutes'), \
     'showtitles_movies'         :('Show All', 'Highlighted Only'), \
     'showtitles_tvshows'        :('Show All', 'Highlighted Only'), \
@@ -51,11 +45,11 @@ options = { \
     'movies_navbar_unwatched'   :('unchecked', 'checked'), \
     'movies_navbar_byfolder'    :('unchecked', 'checked'), \
     'movies_navbar_collections' :('unchecked', 'checked'), \
-    'movies_navbar_genres'      :('checked', 'unchecked'), \
+    'movies_navbar_genres'      :('unchecked', 'checked'), \
     'movies_navbar_decades'     :('unchecked', 'checked'), \
     'movies_navbar_directors'   :('unchecked', 'checked'), \
     'movies_navbar_actors'      :('unchecked', 'checked'), \
-    'movies_navbar_more'        :('checked', 'unchecked'), \
+    'movies_navbar_more'        :('unchecked', 'checked'), \
     'homevideos_navbar_ondeck'      :('checked', 'unchecked'), \
     'homevideos_navbar_unwatched'   :('unchecked', 'checked'), \
     'homevideos_navbar_byfolder'    :('unchecked', 'checked'), \
@@ -66,7 +60,7 @@ options = { \
     'music_navbar_decade'           :('unchecked', 'checked'), \
     'music_navbar_year'             :('unchecked', 'checked'), \
     'music_navbar_more'             :('unchecked', 'checked'), \
-    'tv_navbar_ondeck'          :('unchecked', 'checked'), \
+    'tv_navbar_ondeck'          :('checked', 'unchecked'), \
     'tv_navbar_unwatched'       :('unchecked', 'checked'), \
     'tv_navbar_genres'          :('unchecked', 'checked'), \
     'tv_navbar_more'            :('unchecked', 'checked'), \
