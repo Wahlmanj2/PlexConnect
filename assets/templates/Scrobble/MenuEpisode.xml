@@ -23,10 +23,6 @@
                         </header>
                         
                         <items>
-                            <oneLineMenuItem id="item2" onSelect="atv.loadURL('{{URL(Video/grandparentKey::/children:PlexConnect=TVShow_Season)}}')">
-                                <label>{{TEXT(View Show)}}</label>
-                            </oneLineMenuItem>
-                            
                             <oneLineMenuItem id="item2" onSelect="markItem('{{VAL(%baseURL)}}', '{{VAL(%accesstoken)}}', '{{VAL(Video/ratingKey)}}', 'scrobble');atv.unloadPage();">
                                 <label>{{TEXT(Mark as Watched)}}</label>
                             </oneLineMenuItem>
@@ -35,8 +31,8 @@
                                 <label>{{TEXT(Mark as Unwatched)}}</label>
                             </oneLineMenuItem>
                             
-                            <oneLineMenuItem id="item4" onSelect="atv.loadURL('{{URL(Video/grandparentKey::/children:PlexConnect=Artwork_ChangeShowArtwork)}}')">
-                                <label>{{TEXT(Change All Posters)}}</label>
+                            <oneLineMenuItem id="item4" onSelect="atv.loadURL('{{URL(Video/key:::PlexConnect=Artwork_ChangeSingleArtworkVideo)}}')">
+                                <label>{{TEXT(Change Poster)}}</label>
                             </oneLineMenuItem>
                         </items>
                         
@@ -51,21 +47,21 @@
             <sections>
                 <menuSection>
                     <items>
-                        <oneLineMenuItem id="item2" onSelect="atv.loadURL('{{URL(Video/grandparentKey::/children:PlexConnect=TVShow_Season)}}')">
-                            <label>{{TEXT(View Show)}}</label>
-                        </oneLineMenuItem>
-                        
                         <oneLineMenuItem id="item2" onSelect="markItem('{{VAL(%baseURL)}}', '{{VAL(%accesstoken)}}', '{{VAL(Video/ratingKey)}}', 'scrobble');updateContextXML();">
                             <label>{{TEXT(Mark as Watched)}}</label>
                         </oneLineMenuItem>
                         
                         <oneLineMenuItem id="item3" onSelect="markItem('{{VAL(%baseURL)}}', '{{VAL(%accesstoken)}}', '{{VAL(Video/ratingKey)}}', 'unscrobble');updateContextXML();">
                             <label>{{TEXT(Mark as Unwatched)}}</label>
-                        </oneLineMenuItem>            
-                        
-                        <oneLineMenuItem id="item4" onSelect="atv.loadURL('{{URL(Video/grandparentKey::/children:PlexConnect=Artwork_ChangeFanartEpisode)}}')">
-                            <label>{{TEXT(Change Episode Fanart)}}</label>
                         </oneLineMenuItem>
+                        
+                        <oneLineMenuItem id="item4" onSelect="atv.loadURL('{{URL(Video/key:::PlexConnect=Artwork_ChangeSingleArtworkVideo)}}')">
+                            <label>{{TEXT(Change Episode Poster)}}</label>
+                        </oneLineMenuItem>
+                        
+                        <!--<oneLineMenuItem id="item4" onSelect="atv.loadURL('{{URL(Video/grandparentKey::/children:PlexConnect=Artwork_ChangeFanartEpisode)}}')">
+                         <label>{{TEXT(Change Episode Fanart)}}</label>
+                         </oneLineMenuItem>-->
                         
                     </items>
                 </menuSection>
