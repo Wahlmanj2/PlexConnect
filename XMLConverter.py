@@ -342,7 +342,7 @@ def XML_PMS2aTV(PMS_address, path, options):
         parts = cmd.split('_', 1)
         dir = parts[0]
         cmd = parts[1]
-    
+            
     # Overview case scanners
     if cmd.find('Overview') != -1:
         dprint(__name__, 0, "Overview scanner found, updating command.")
@@ -758,7 +758,7 @@ class CCommandCollection(CCommandHelper):
             tag, param_enbl = self.getParam(src, tags[0])
         else:
             tag, param_enbl = self.getParam(src, param)
-        src, srcXML, tag = self.getBase(src, srcXML, tag)
+        src, srcXML, tag = self.getBase(src, srcXML, tag)        
         
         # walk the src path if neccessary
         while '/' in tag and src!=None:
@@ -770,7 +770,6 @@ class CCommandCollection(CCommandHelper):
         for ix, el in enumerate(list(elem)):
             if el==child:
                 break
-        
         
         #get all requested tags
         itemrange = src.findall(tag)
@@ -784,7 +783,7 @@ class CCommandCollection(CCommandHelper):
             itemrange = sorted(itemrange, key=lambda x: x.attrib.get('addedAt'), reverse=True)
         
         cnt = 0
-        
+
         for elemSRC in itemrange:
             key = 'COPY'
             if param_enbl!='':
@@ -1031,10 +1030,7 @@ class CCommandCollection(CCommandHelper):
         attribs = {'insertIndex': '0', 'required': 'true', 'src': ''}
         
         # Resolution
-        if resolution not in ['720', '1080', '2k', '4k']:
-            attribs['src'] = g_param['baseURL'] + '/thumbnails/MediaBadges/sd.png'
-        else:
-            attribs['src'] = g_param['baseURL'] + '/thumbnails/MediaBadges/' + resolution + '.png'
+        attribs['src'] = g_param['baseURL'] + '/thumbnails/MediaBadges/' + resolution + '.png'
         urlBadge = etree.SubElement(additionalBadges, "urlBadge", attribs)
         index += 1
         # Special case iTunes DRM
@@ -1052,8 +1048,8 @@ class CCommandCollection(CCommandHelper):
             index += 1 
         # Video Codec
         if vCodec != '' and self.options['aTVFirmwareVersion'] >= '7.0':
-            if vCodec == 'mpeg4':
-                vCodec, leftover, dfltd = self.getKey(src, srcXML, param + "/Part/Stream/codecID")
+            if vCodec == 'mpeg4': 
+                vCodec = "XVID" # Are there any other mpeg4-part 2 codecs?
             attribs['insertIndex'] = str(index)
             attribs['src'] = g_param['baseURL'] + '/thumbnails/MediaBadges/' + vCodec + '.png'
             urlBadge = etree.SubElement(additionalBadges, "urlBadge", attribs)
@@ -1443,15 +1439,7 @@ class CCommandCollection(CCommandHelper):
             return "No Server in Proximity"
         else:
             return PMS_name
-    def ATTRIB_LFBG(self, src, srcXML, param):
-        import PILBackgrounds
-        res = ""
-        res = PILBackgrounds.generate(self, src, srcXML, param)
-        if res == "":
-            res = sys.path[0]+'/assets/fanart/bg.jpg'
-        dprint(__name__, 1, 'serving: {0}', res+".png")  # Debug
-        return res
-
+    
     def ATTRIB_getBackground(self, src, srcXML, param):
         import PILBackgrounds
         conf = PILBackgrounds.ImageBackground(eval(param))
@@ -1474,8 +1462,7 @@ class CCommandCollection(CCommandHelper):
         blurStart, leftover = self.getParam(src, leftover)
         blurEnd, leftover = self.getParam(src, leftover)
         statusText, leftover = self.getParam(src, leftover)
-
-
+        
         if key.startswith('/'):  # internal full path.
             key = self.PMS_baseURL + key
         elif key.startswith('http://') or key.startswith('https://'):  # external address
@@ -1487,7 +1474,7 @@ class CCommandCollection(CCommandHelper):
         
         dprint(__name__, 0, "Background (Source): {0}", key)
         res = g_param['baseURL']  # base address to PlexConnect
-        
+
         res = res + PILBackgrounds.generate(self.PMS_uuid, key, auth_token, self.options['aTVScreenResolution'], g_ATVSettings.getSetting(self.ATV_udid, 'fanart_blur'), gradientTemplate, titleText, subtitleText, titleSize, subtitleSize, textColor, align, valign, offsetx, offsety, lineheight, blurStart, blurEnd, statusText)
         dprint(__name__, 0, "Background: {0}", res)
         return res

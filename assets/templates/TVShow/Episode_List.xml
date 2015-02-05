@@ -10,9 +10,14 @@
   {{VAR(artwork:art)}}
   
   <body>
-
-
+  
     <itemCollectionWithImageHeader id="com.sample.menu-items-with-sections" volatile="true" onVolatileReload="atv.loadAndSwapURL('{{URL(:::PlexConnect=TVShow_Episode_List)}}')">
+    
+        <styles>
+          <color name="titleColor">#fafafa</color>
+          <color name="metadataColor">#fafafa</color>
+        </styles>
+        
 	<header>
         <imageHeader>
           <image insets="0, 0, {{VAL(^aTVScreenResolution:1:720=552|1080=835)}}, 0" required="true">
@@ -31,6 +36,7 @@
           </image>
         </imageHeader>
       </header>
+      
       {{VAR(parentThumb:thumb)}}
       <menu>      
         <sections>
@@ -49,31 +55,31 @@
                 <accessories>
                 <unplayedDot/>{{CUT(viewOffset)}}
                   <progressBar percentage="{{EVAL({{VAL(viewOffset:0)}} * 100 / {{VAL(duration:1)}})}}"/>{{CUT(viewOffset:CUT:=)}}
-                <!---<progressBar percentage="100"/>{{CUT(viewCount:CUT:=)}}{{CUT(viewOffset)}}-->
                 </accessories>{{CUT(viewCount)}}
 
                 <preview>
                   <longDescriptionPreview>
-                    <title>{{VAL(title)}}</title>
-                    <summary><![CDATA[{{VAL(summary)}}]]></summary>{{CUT($showsynopsis::Hide=CUT|Show=)}}
-                    <summary><![CDATA[{{VAL(summary)}}]]></summary>{{CUT(viewCount:CUT:=)}}{{CUT($showsynopsis::Show=CUT|Hide=)}}
-                    <summary>{{TEXT(Synopsis hidden.)}}</summary>{{CUT(viewCount)}}{{CUT($showsynopsis::Show=CUT|Hide=)}}
-                    <rating>{{VAL(#contentRating)}}</rating>
-                    <image>{{IMAGEURL(#parentThumb::768)}}</image>
-                    <metadata>
-                      <label>{{VAL(originallyAvailableAt)}}</label>
-                      <label>{{VAL(#studio)}}</label>
-                      <label>{{durationToString(NoKey:Video:duration)}}</label>
-                      <mediaBadges />{{MEDIABADGES(Media)}}
-                      <starRating hasUserSetRating="true">
-                        <percentage>{{EVAL({{VAL(userRating:0)}} * 10)}}</percentage>
-                      </starRating>{{CUT(userRating:CUT:0=)}}
+                   <title>{{VAL(title)}}</title>
+                   <summary><![CDATA[{{VAL(summary)}}]]></summary>{{CUT($showsynopsis::Hide=CUT|Show=)}}
+                   <summary><![CDATA[{{VAL(summary)}}]]></summary>{{CUT(viewCount:CUT:=)}}{{CUT($showsynopsis::Show=CUT|Hide=)}}
+                   <summary>{{TEXT(Synopsis hidden.)}}</summary>{{CUT(viewCount)}}{{CUT($showsynopsis::Show=CUT|Hide=)}}
+                   <rating>{{VAL(#contentRating)}}</rating>
+                   <image>{{IMAGEURL(#parentThumb::768)}}</image>
+                   <metadata>
+                   <label>{{VAL(originallyAvailableAt)}}</label>
+                   <label>{{VAL(#studio)}}</label>
+                   <label>{{durationToString(NoKey:Video:duration)}}</label>
+                   <mediaBadges />{{MEDIABADGES(Media)}}
+                   <starRating hasUserSetRating="true">
+                   <percentage>{{EVAL({{VAL(userRating:0)}} * 10)}}</percentage>
+                   </starRating>{{CUT(userRating:CUT:0=)}}
                       <starRating>
                         <percentage>{{EVAL({{VAL(rating:0)}} * 10)}}</percentage>
                       </starRating>{{CUT(userRating::0=CUT)}}             
                     </metadata>
                   </longDescriptionPreview>
                 </preview>
+                
               </twoLineEnhancedMenuItem>{{CUT(Video/title:CUT:=)}}
 
               <oneLineMenuItem id="none">
