@@ -338,7 +338,7 @@ def XML_PMS2aTV(PMS_address, path, options):
         XMLtemplate = 'Channels/VideoSearchResults.xml'
         
     # Not a special command so split it 
-    if cmd.find('_') != -1:
+    elif cmd.find('_') != -1:
         parts = cmd.split('_', 1)
         dir = parts[0]
         cmd = parts[1]
@@ -362,10 +362,14 @@ def XML_PMS2aTV(PMS_address, path, options):
         cmd = 'Pagedview'
     
     # Special case scanners
-    if cmd.find('Scanner') != -1:
-        dprint(__name__, 0, "Section scanner found, updating command.")
+    if cmd=='S_-_BABS':
+        dprint(__name__, 1, "Found S - BABS.")
+        dir = 'TVShow'
+        cmd = 'NavigationBar'
+    elif cmd.find('Scanner') != -1:
+        dprint(__name__, 1, "Found Scanner.")
         parts = cmd.split('_')
-        dir = parts[0].replace('Series', 'TVShow')
+        dir = parts[1].replace('Series', 'TVShow')
         dir = dir.replace('Video', 'HomeVideo')
         dir = dir.replace('iTunes', 'Music')
         cmd = 'NavigationBar'
