@@ -14,7 +14,7 @@
 	    {{URL(:/fanartcache/{{getBackground({{EVAL({\
               'template'    : 'plex',\
               'title'       : "{{EVAL(quote_plus("{{TEXT(Plex Library)}}"))}}",\
-              'image'       : "backgrounds/plex{{VAL($menubackground::Grey=default|Plex Orange=orange|Apple Blue=blue|Green=green)}}.png",\
+              'image'       : "backgrounds/plex{{VAL($menubackground::Grey=default|Plex Orange=orange|Apple Blue=blue|Green=green|Pixar=pixar|Batman=Batman|Wall E=walle|Monstres=monstres|GOT=got|Inception=inception)}}.png",\
               'resolution'  : "{{VAL(^aTVScreenResolution)}}",\
               'font'        : "fonts/OpenSans/OpenSans-Light.ttf",\
               'titleColor'  : "{{VAL($titlecolor::White=fafafa|Grey=878787|Plex Orange=ff8800|Apple Blue=1357d4)}}",\

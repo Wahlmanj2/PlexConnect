@@ -105,7 +105,7 @@ options = { \
     'listtint'                  :('Off', 'On'), \
     'paradelisttint'            :('Off', 'On'), \
     'menuhint'                  :('Off', 'On'), \
-    'menubackground'            :('Grey', 'Plex Orange', 'Apple Blue', 'Green'), \
+    'menubackground'            :('Grey', 'Plex Orange', 'Apple Blue', 'Green','Pixar','Pixar2','Batman','Wall E','Monstres','GOT','Inception'), \
     }
 
 
