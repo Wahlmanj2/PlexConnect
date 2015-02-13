@@ -78,7 +78,6 @@
               </horizontalDivider>
             </header>
           
-          
             <items>
               <oneLineMenuItem id="MoviePrePlay_BottomShelf" onSelect="toggleSettings('MoviePrePlay_BottomShelf', 'Settings_Movies')">
                 <label>{{TEXT(PrePlay Bottom Shelf)}}</label>
@@ -87,6 +86,25 @@
               </items>
           </menuSection>
           
+          <menuSection>
+            <header>
+              <horizontalDivider alignment="left">
+                <title>{{TEXT(Movie PrePlay)}}</title>
+              </horizontalDivider>
+            </header>
+          
+          
+            <items>
+              <oneLineMenuItem id="MovieLayers" onSelect="toggleSettings('MovieLayers', 'Settings_Movies')">
+                <label>{{TEXT(Movie Layer)}}</label>
+                <rightLabel>{{SETTING(movielayers)}}</rightLabel>
+              </oneLineMenuItem>
+              <oneLineMenuItem id="MoviePosters" onSelect="toggleSettings('MoviePosters', 'Settings_Movies')">
+                <label>{{TEXT(Movie Poster)}}</label>
+                <rightLabel>{{SETTING(movieposters)}}</rightLabel>
+              </oneLineMenuItem>
+            </items>
+          </menuSection>
 
           <menuSection>
             <header>

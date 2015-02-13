@@ -13,13 +13,19 @@ options = { \
     'playlistsview'             :('List', 'Tabbed List', 'Hide'), \
     'libraryview'               :('Grid', 'Paged Grid', 'Overview', 'Overview Paged', 'List', 'Hide'), \
     'sharedlibrariesview'       :('Grid', 'Paged Grid', 'Overview', 'Overview Paged', 'List', 'Hide'), \
-    'librariesview'             :('Hide', 'Grid', 'Paged Grid', 'Overview', 'Overview Paged', 'List'), \
-    'channelview'               :('Grid', 'List', 'Tabbed List', 'Hide'), \
-    'sectionsposition'           :('Flow', 'Top'), \
+    'librariesview'             :('Overview Paged', 'Overview', 'Paged Grid', 'Grid', 'List', 'Hide'), \
+    'channelview'               :('List', 'Tabbed List', 'Grid', 'Hide'), \
+    'sectionsposition'           :('Top', 'Flow'), \
     'movieview'                  :('Big Artwork', 'Grid', 'List', 'Detailed List'), \
+    'movieposters'               :('Hide', 'Show'), \
+    'movielayers'                :('Hide', 'Show'), \
     'homevideoview'              :('Grid', 'List', 'Detailed List'), \
     'showview'                   :('Big Artwork', 'Grid', 'List', 'Bookcase'), \
     'movie_extras'               :('Show', 'Hide'), \
+    'episodeposters'             :('Hide', 'Show'), \
+    'showlayers'                 :('Hide', 'Show'), \
+    'seasonlayers'               :('Hide', 'Show'), \
+    'episodelayers'              :('Hide', 'Show'), \
     'fanart_blur'                :('0', '5', '10', '15', '20'), \
     'moviepreplay_bottomshelf'   :('Extras', 'Related Movies'), \
     'episodeview'                :('List', 'Grid'), \
@@ -35,7 +41,7 @@ options = { \
     'showtitles_library'         :('Show All', 'Highlighted Only'), \
     'starttab'                   :('Library', 'Shared Libraries', 'Channels'), \
     'actorview'                  :('Movies', 'Portrait'), \
-    'flattenseason'              :('False', 'True'), \
+    'flattenseason'              :('True', 'False'), \
     'durationformat'             :('Hours/Minutes', 'Minutes'), \
     'showtitles_movies'         :('Show All', 'Highlighted Only'), \
     'showtitles_tvshows'        :('Show All', 'Highlighted Only'), \

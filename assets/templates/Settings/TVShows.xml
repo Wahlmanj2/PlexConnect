@@ -84,6 +84,44 @@
             </items>
           </menuSection>
           
+          <menuSection>
+            <header>
+              <horizontalDivider alignment="left">
+                <title>{{TEXT(Episode PrePlay)}}</title>
+              </horizontalDivider>
+            </header>
+          
+          
+            <items>
+              <oneLineMenuItem id="ShowLayers" onSelect="toggleSettings('ShowLayers', 'Settings_TVShows')">
+                <label>{{TEXT(PrePlay Layer)}}</label>
+                <rightLabel>{{SETTING(showlayers)}}</rightLabel>
+              </oneLineMenuItem>
+              <oneLineMenuItem id="EpisodePosters" onSelect="toggleSettings('EpisodePosters', 'Settings_TVShows')">
+                <label>{{TEXT(PrePlay Poster)}}</label>
+                <rightLabel>{{SETTING(episodeposters)}}</rightLabel>
+              </oneLineMenuItem>
+            </items>
+          </menuSection>
+          
+          <menuSection>
+            <header>
+              <horizontalDivider alignment="left">
+                <title>{{TEXT(Section Layers)}}</title>
+              </horizontalDivider>
+            </header>
+                 
+            <items>
+              <oneLineMenuItem id="EpisodeLayers" onSelect="toggleSettings('EpisodeLayers', 'Settings_TVShows')">
+                <label>{{TEXT(Episode Layer)}}</label>
+                <rightLabel>{{SETTING(episodelayers)}}</rightLabel>
+              </oneLineMenuItem>
+              <oneLineMenuItem id="SeasonLayers" onSelect="toggleSettings('SeasonLayers', 'Settings_TVShows')">
+                <label>{{TEXT(Season Layer)}}</label>
+                <rightLabel>{{SETTING(seasonlayers)}}</rightLabel>
+              </oneLineMenuItem>
+            </items>
+          </menuSection>
 
           <menuSection>
             <header>

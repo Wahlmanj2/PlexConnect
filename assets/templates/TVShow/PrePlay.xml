@@ -13,37 +13,48 @@
           <color name="titleColor">#{{VAL($tabletitlecolor::White=fafafa|Grey=878787|Plex Orange=ff8800|Apple Blue=1357d4)}}</color>
           <color name="metadataColor">#{{VAL($metadatacolor::White=fafafa|Grey=878787)}}</color>
         </styles>
-       <header>
-	    <imageHeader>
-	      <image insets="0, 0, {{VAL(^aTVScreenResolution:1:720=440|1080=690)}}, 0" required="true">
-	      {{URL(:/fanartcache/{{getBackground({{EVAL({\
-              'template'    : 'plex',\
-              'title'       : "{{EVAL(quote_plus("{{VAL(Video/grandparentTitle)}}"))}}",\
-              'subtitle'    : "{{EVAL(quote_plus("{{VAL(Video/index)}}. {{VAL(Video/title)}}"))}}",\
-              'image'       : "{{IMAGEURL(Video/art:::)}}",\
-              'resolution'  : "{{VAL(^aTVScreenResolution)}}",\
-              'font'        : "fonts/OpenSans/OpenSans-Light.ttf",\
-              'imageBlur'   : "{{VAL($fanartblur::1=1|2=2|3=3|0=)}}",\
-              'titleSize'   : '50',\
-              'subtitleSize' : '30',\
-              'titleColor'  : "{{VAL($titlecolor::White=fafafa|Grey=878787|Plex Orange=ff8800|Apple Blue=1357d4)}}",\
-              'subtitleColor': "{{VAL($subtitlecolor::White=fafafa|Grey=878787|Plex Orange=ff8800|Apple Blue=1357d4)}}",\
-              'anchorX'     : 'right',\
-              'anchorY'     : 'top',\
-              'offsetX'     : '50',\
-              'offsetY'     : '20',\
-              'lineheight'  : '175',\
-              'layers': ["PlexPrePlay{{VAL($fanarttint::On=Text|Off=)}}","PlexPrePlayLineTV"]\
-              })}})}})}}	      
-	    </image>
-	    </imageHeader>
-	  </header>
+    <header>
+        <imageHeader>
+            <image insets="0, 0, {{VAL(^aTVScreenResolution:1:720=440|1080=690)}}, 0" required="true">
+                {{URL(:/fanartcache/{{getBackground({{EVAL({\
+                'template'    : 'plex',\
+                'title'       : "{{EVAL(quote_plus("{{VAL(Video/grandparentTitle)}}"))}}",\
+                'subtitle'    : "{{EVAL(quote_plus("{{VAL(Video/index)}}. {{VAL(Video/title)}}"))}}",\
+                'image'       : "{{IMAGEURL(Video/art:::)}}",\
+                'resolution'  : "{{VAL(^aTVScreenResolution)}}",\
+                'font'        : "fonts/OpenSans/OpenSans-Light.ttf",\
+                'imageBlur'   : "{{VAL($fanartblur::1=1|2=2|3=3|0=)}}",\
+                'titleSize'   : '50',\
+                'subtitleSize' : '30',\
+                'titleColor'  : "{{VAL($titlecolor::White=fafafa|Grey=878787|Plex Orange=ff8800|Apple Blue=1357d4)}}",\
+                'subtitleColor': "{{VAL($subtitlecolor::White=fafafa|Grey=878787|Plex Orange=ff8800|Apple Blue=1357d4)}}",\
+                'anchorX'     : 'right',\
+                'anchorY'     : 'top',\
+                'offsetX'     : '50',\
+                'offsetY'     : '20',\
+                'lineheight'  : '175',\
+                'layers': ["PlexPrePlay{{VAL($fanarttint::On=Text|Off=)}}","PlexPrePlayLineTV"]\
+                })}})}})}}
+            </image>{{CUT($showlayers::Hide=CUT|Show=)}}
+            
+            <image insets="0, 0, {{VAL(^aTVScreenResolution:1:720=440|1080=690)}}, 0" required="true">
+                {{URL(:/fanartcache/{{getBackground({{EVAL({\
+                'template'    : 'plex',\
+                'image'       : "{{IMAGEURL(Video/art:::)}}",\
+                'resolution'  : "{{VAL(^aTVScreenResolution)}}",\
+                'imageBlur'   : "{{VAL($fanartblur::1=1|2=2|3=3|0=)}}",\
+                'layers': ["PlexPrePlayLineTV"]\
+                })}})}})}}
+            </image>{{CUT($showlayers::Hide=|Show=CUT)}}
+        </imageHeader>
+    </header>
 	  
       <rating>{{contentRating(Video/contentRating)}}</rating>
       <summary>{{VAL(Video/summary)}}</summary>{{CUT($showsynopsis::Hide=CUT|Show=)}}
       <summary>{{VAL(Video/summary)}}</summary>{{CUT(Video/viewCount:CUT:=)}}{{CUT($showsynopsis::Show=CUT|Hide=)}}
       <summary>{{TEXT(Synopsis hidden.)}}</summary>{{CUT(Video/viewCount)}}{{CUT($showsynopsis::Show=CUT|Hide=)}}
-      <image style="moviePoster">{{IMAGEURL(Video/parentThumb::768)}}</image>
+      <image style="moviePoster">{{IMAGEURL(Video/parentThumb::768)}}</image>{{CUT($episodeposters::Show=|Hide=CUT)}}
+      <image style="moviePoster">{{IMAGEURL(#parentThumb::768)}}</image>{{CUT($episodeposters::Hide=|Show=CUT)}}
       
 
       <table>
