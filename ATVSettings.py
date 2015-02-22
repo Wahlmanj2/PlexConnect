@@ -47,15 +47,15 @@ options = { \
     'showtitles_tvshows'        :('Show All', 'Highlighted Only'), \
     'showtitles_homevideos'     :('Show All', 'Highlighted Only'), \
     'showtitles_channels'       :('Show All', 'Highlighted Only'), \
-    'movies_navbar_ondeck'      :('checked', 'unchecked'), \
+    'movies_navbar_ondeck'      :('unchecked', 'checked'), \
     'movies_navbar_unwatched'   :('unchecked', 'checked'), \
     'movies_navbar_byfolder'    :('unchecked', 'checked'), \
     'movies_navbar_collections' :('unchecked', 'checked'), \
-    'movies_navbar_genres'      :('unchecked', 'checked'), \
+    'movies_navbar_genres'      :('checked', 'unchecked'), \
     'movies_navbar_decades'     :('unchecked', 'checked'), \
     'movies_navbar_directors'   :('unchecked', 'checked'), \
     'movies_navbar_actors'      :('unchecked', 'checked'), \
-    'movies_navbar_more'        :('unchecked', 'checked'), \
+    'movies_navbar_more'        :('checked', 'unchecked'), \
     'homevideos_navbar_ondeck'      :('checked', 'unchecked'), \
     'homevideos_navbar_unwatched'   :('unchecked', 'checked'), \
     'homevideos_navbar_byfolder'    :('unchecked', 'checked'), \
@@ -66,7 +66,7 @@ options = { \
     'music_navbar_decade'           :('unchecked', 'checked'), \
     'music_navbar_year'             :('unchecked', 'checked'), \
     'music_navbar_more'             :('unchecked', 'checked'), \
-    'tv_navbar_ondeck'          :('checked', 'unchecked'), \
+    'tv_navbar_ondeck'          :('unchecked', 'checked'), \
     'tv_navbar_unwatched'       :('unchecked', 'checked'), \
     'tv_navbar_genres'          :('unchecked', 'checked'), \
     'tv_navbar_more'            :('unchecked', 'checked'), \
