@@ -35,6 +35,11 @@
           <url>{{URL(:/PMS(shared)/library/sections::PlexConnect=Library_ViewShared)}}</url>
         </navigationItem>{{CUT($myplex_auth:CUT:=CUT| =)}}{{CUT($sharedlibrariesview:CUT:=|Hide=CUT|Hide =)}}{{CUT($librariesview::Hide=|Grid=CUT|Paged Grid=CUT|Overview=CUT|Overview Paged=CUT|List=CUT)}}
         
+        <navigationItem id="Search">
+          <title>{{TEXT(Search)}}</title>
+          <url>{{URL(:/PMS(all)::PlexConnect=Search_EntryAllPMS)}}</url>
+        </navigationItem>
+        
         <navigationItem id="Settings">
           <title>{{TEXT(Settings)}}</title>
           <url>{{URL(:/::PlexConnect=Settings_Main)}}</url>
