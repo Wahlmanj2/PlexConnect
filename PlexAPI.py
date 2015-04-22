@@ -524,14 +524,14 @@ def getXMLFromMultiplePMS(ATV_udid, path, type, options={}):
                     if 'art' in Video.attrib:
                         Video.set('art',    PMS_mark + getURL('', path, Video.get('art')))
                     Server.append(Video)
-                    
+
                 for Playlist in XML.getiterator('Playlist'):  # copy "Playlist" content, add PMS to links
                     key = Playlist.get('key')  # absolute path
                     Playlist.set('key',    PMS_mark + getURL('', path, key))
                     if 'composite' in Playlist.attrib:
                         Playlist.set('composite', PMS_mark + getURL('', path, Playlist.get('composite')))
                     Server.append(Playlist)
-                    
+    
     root.set('size', str(len(root.findall('Server'))))
     
     XML = etree.ElementTree(root)
