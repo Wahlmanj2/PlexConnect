@@ -6,7 +6,7 @@ Collection of "connector functions" to Plex Media Server/MyPlex
 
 PlexGDM:
 loosely based on hippojay's plexGDM:
-https://github.com/hippojay/plugin.video.plexbmc
+https://github.com/hippojay/script.plexbmc.helper... /resources/lib/plexgdm.py
 
 
 Plex Media Server communication:
@@ -136,7 +136,7 @@ parameters:
 result:
     PMS_list - dict() of PMSs found
 """
-IP_PlexGDM = '<broadcast>'
+IP_PlexGDM = '239.0.0.250'  # multicast to PMS
 Port_PlexGDM = 32414
 Msg_PlexGDM = 'M-SEARCH * HTTP/1.0'
 
@@ -150,7 +150,8 @@ def PlexGDM():
     GDM.settimeout(1.0)
     
     # Set the time-to-live for messages to 1 for local network
-    GDM.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+    ttl = struct.pack('b', 1)
+    GDM.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, ttl)
     
     returnData = []
     try:
@@ -508,7 +509,14 @@ def getXMLFromMultiplePMS(ATV_udid, path, type, options={}):
                     if 'art' in Dir.attrib:
                       Dir.set('art',    PMS_mark + getURL('', path, Dir.get('art')))
                     Server.append(Dir)
-                    
+                
+                for Playlist in XML.getiterator('Playlist'):  # copy "Playlist" content, add PMS to links
+                    key = Playlist.get('key')  # absolute path
+                    Playlist.set('key',    PMS_mark + getURL('', path, key))
+                    if 'composite' in Playlist.attrib:
+                        Playlist.set('composite', PMS_mark + getURL('', path, Playlist.get('composite')))
+                    Server.append(Playlist)
+                
                 for Video in XML.getiterator('Video'):  # copy "Video" content, add PMS to links
                     key = Video.get('key')  # absolute path
                     Video.set('key',    PMS_mark + getURL('', path, key))
@@ -524,13 +532,6 @@ def getXMLFromMultiplePMS(ATV_udid, path, type, options={}):
                     if 'art' in Video.attrib:
                         Video.set('art',    PMS_mark + getURL('', path, Video.get('art')))
                     Server.append(Video)
-
-                for Playlist in XML.getiterator('Playlist'):  # copy "Playlist" content, add PMS to links
-                    key = Playlist.get('key')  # absolute path
-                    Playlist.set('key',    PMS_mark + getURL('', path, key))
-                    if 'composite' in Playlist.attrib:
-                        Playlist.set('composite', PMS_mark + getURL('', path, Playlist.get('composite')))
-                    Server.append(Playlist)
     
     root.set('size', str(len(root.findall('Server'))))
     
