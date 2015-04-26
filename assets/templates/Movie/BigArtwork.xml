@@ -1,7 +1,11 @@
 <atv>
   <head>
     <script src="{{URL(:/js/utils.js)}}" />
-  </head> 
+  </head>
+  
+  {{ADDXML(newest::/library/sections/{{VAL(librarySectionID)}}/newest?X-Plex-Container-Start=0&amp;X-Plex-Container-Size=40)}}
+  {{VAR(items:NoKey:FALSE)}}
+  
   <body>
     <scroller id="Movie_Flow">
     {{CUT(size:CUT:0=CUT|1=)}}
