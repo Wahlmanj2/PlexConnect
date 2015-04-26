@@ -37,6 +37,7 @@
                 <label2>{{durationToString(NoKey:Video:duration)}}</label2>
                 <accessories>
                   <unplayedDot/>{{CUT(viewOffset)}}
+                  <progressBar percentage="{{EVAL({{VAL(viewOffset:0)}} * 100 / {{VAL(duration:1)}})}}"/>{{CUT(viewOffset:CUT:=)}}
                   <partiallyPlayedDot/>
                 </accessories>{{CUT(viewCount)}}
                 <preview>
