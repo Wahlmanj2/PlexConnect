@@ -64,7 +64,8 @@
                    <summary><![CDATA[{{VAL(summary)}}]]></summary>{{CUT(viewCount:CUT:=)}}{{CUT($showsynopsis::Show=CUT|Hide=)}}
                    <summary>{{TEXT(Synopsis hidden.)}}</summary>{{CUT(viewCount)}}{{CUT($showsynopsis::Show=CUT|Hide=)}}
                    <rating>{{VAL(#contentRating)}}</rating>
-                   <image>{{IMAGEURL(#parentThumb::768)}}</image>
+                   <image>{{IMAGEURL(parentThumb::768)}}</image>{{CUT(parentThumb:CUT:=CUT| =)}}
+                   <image>{{IMAGEURL(#parentThumb::768)}}</image>{{CUT(parentThumb:: =CUT)}}
                    <metadata>
                    <label>{{VAL(originallyAvailableAt)}}</label>
                    <label>{{VAL(#studio)}}</label>
