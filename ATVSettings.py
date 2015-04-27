@@ -11,9 +11,9 @@ from Debug import *  # dprint()
 
 options = { \
     'playlistsview'             :('List', 'Tabbed List', 'Hide'), \
-    'libraryview'               :('Grid', 'Paged Grid', 'Overview', 'Overview Paged', 'List', 'Hide'), \
-    'sharedlibrariesview'       :('Grid', 'Paged Grid', 'Overview', 'Overview Paged', 'List', 'Hide'), \
-    'librariesview'             :('Overview Paged', 'Overview', 'Paged Grid', 'Grid', 'List', 'Hide'), \
+    'libraryview'               :('Grid', 'Paged Grid', 'List', 'Hide'), \
+    'sharedlibrariesview'       :('Grid', 'Paged Grid', 'List', 'Hide'), \
+    'librariesview'             :('Paged Grid', 'Grid', 'List', 'Hide'), \
     'channelview'               :('List', 'Tabbed List', 'Grid', 'Hide'), \
     'sectionsposition'           :('Top', 'Flow'), \
     'movieview'                  :('Big Artwork', 'Grid', 'List', 'Detailed List'), \
